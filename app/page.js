@@ -7,11 +7,11 @@ const Page = () => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
   return (
-    <div className="flex flex-col min-h-screen p-10">
+    <div className="flex flex-col min-h-screen p-2">
       {/* Top Navbar */}
       <nav className="w-full bg-white border-b shadow-sm">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex justify-between h-16 items-center">
+          <div className="flex justify-between h-8 items-center">
             {/* Left: Logo */}
             <div className="text-xl font-bold text-gray-800">MyApp</div>
 
@@ -68,7 +68,7 @@ const Page = () => {
                   </span>
                 </button>
                 {isProfileOpen && (
-                  <div className="absolute right-0 mt-2 w-48 bg-white border rounded-lg shadow-lg py-2">
+                  <div className="absolute right-0 mt-2 w-48 bg-white border rounded-xl shadow-lg py-2">
                     <a
                       href="#"
                       className="block px-4 py-2 text-gray-700 hover:bg-gray-100"
@@ -109,13 +109,13 @@ const Page = () => {
               href="#"
               className="block px-4 py-2 text-gray-700 hover:bg-gray-100"
             >
-              Dashboard
+              Home
             </a>
             <a
               href="#"
               className="block px-4 py-2 text-gray-700 hover:bg-gray-100"
             >
-              Projects
+              About
             </a>
             <a
               href="#"
@@ -141,9 +141,9 @@ const Page = () => {
       </nav>
 
       {/* Secondary Menu Bar (Modules Navigation) */}
-      <div className="bg-gray-100 border-b p-4">
+      <div className="bg-gray-100 border-b p-3.5">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex items-center justify-center">
-          <div className="flex space-x-6 h-12 items-center">
+          <div className="flex space-x-6 h-2 items-center">
             <a href="#" className="text-gray-700 hover:text-blue-600">
               Dashboard
             </a>
@@ -161,7 +161,7 @@ const Page = () => {
       </div>
 
       {/* Content Area */}
-      <main className="flex-grow max-w-7xl mx-auto w-full px-4 py-6">
+      <main className="flex-grow max-w-7xl mx-auto w-full px-0 py-2">
         <div className="border rounded-lg p-6 bg-white shadow-sm">
           Content Area / Workspace
         </div>
