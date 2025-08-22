@@ -4,7 +4,9 @@ import "./globals.css";
   href="https://fonts.googleapis.com/icon?family=Material+Icons"
   rel="stylesheet"
 />
-
+import Navbar from '../components/Navbar';
+import Sidebar from '../components/Sidebar';
+import Footer from '../components/Footer';
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -27,7 +29,12 @@ export default function RootLayout({ children }) {
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
-        {children}
+        <div className="flex flex-col h-screen p-2 overflow-hidden">
+          <Navbar/>
+          <Sidebar/>
+          {children}
+          <Footer/>
+        </div>
       </body>
     </html>
   );
