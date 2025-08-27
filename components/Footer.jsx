@@ -4,7 +4,7 @@ const page = () => {
   return (
     <div>
         {/* Footer */}
-      <footer className="bg-gray-200 border-t p-1 text-center text-gray-600 text-sm">
+      <footer className="bg-neutral-900 border-t border-neutral-800 p-1 text-center text-gray-400 text-sm">
         Footer
       </footer>
     </div>
