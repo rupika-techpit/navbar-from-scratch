@@ -1,35 +1,23 @@
-"use client"
-import React from 'react'
-import { useState } from "react";
+"use client";
+import React from "react";
 
-
-const Page = () => {
-  
-
+const page = () => {
   return (
-    // <div className='flex-grow w-full overflow-y-auto p-2'>
-    //   {/* Content Area */}
-    //   <main className="flex-grow w-full mx-auto px-0 py-2">
-    //     <div className="bg-white shadow-sm">
-    //       Content Area / Workspace
-    //     </div>
-    //   </main>
-
-    // </div>
-
-    <div className="flex-grow w-full overflow-y-auto p-0">
+    <div className="flex-grow w-full overflow-y-auto p-2">
       {/* Content Area */}
         <main className="flex-grow w-full mx-auto px-0 py-2">
-            <div className="bg-white shadow-sm">
+            <div className="bg-white">
                 <p>
-                    this is about page
+                    Here is the content
                 </p>
             </div>
         </main>
 
     </div>
-  );
-};
+  )
+}
 
-export default Page;
+export default page
+
+
 

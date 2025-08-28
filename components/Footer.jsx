@@ -1,14 +1,15 @@
-import React from 'react'
+import React from "react";
 
-const page = () => {
+const Footer = () => {
   return (
-    <div>
-        {/* Footer */}
-      <footer className="bg-neutral-900 border-t border-neutral-800 p-1 text-center text-gray-400 text-sm">
-        Footer
-      </footer>
-    </div>
-  )
-}
+    <footer className="fixed bottom-0 left-0 w-full bg-white border-t border-gray-200 py-2 shadow-md">
+      <p className="text-center text-sm text-gray-600">
+        © 2025 My App. All rights reserved.
+      </p>
+    </footer>
+  );
+};
 
-export default page;
+export default Footer;
+
+

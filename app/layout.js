@@ -8,6 +8,8 @@ import Navbar from '../components/Navbar';
 import Sidebar from '../components/Sidebar';
 import Footer from '../components/Footer';
 
+
+
 const geistSans = Geist({
   variable: "--font-geist-sans",
   subsets: ["latin"],
@@ -29,13 +31,22 @@ export default function RootLayout({ children }) {
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
-        <div className="flex flex-col h-screen overflow-hidden">
-          <Navbar/>
-          <Sidebar/>
-          {children}
-          <Footer/>
+        <div className="flex flex-col min-h-screen">
+          {/* Navbar stays at the top */}
+          <Navbar />
+
+          {/* Scrollable content */}
+          <main className="flex-grow w-full pb-16"> 
+            {/* add padding-bottom so content doesn't overlap footer */}
+            {children}
+          </main>
+
+          {/* Fixed Footer */}
+          <Footer />
         </div>
       </body>
     </html>
   );
 }
+
+

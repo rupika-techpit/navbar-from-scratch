@@ -1,166 +1,177 @@
-"use client"
-import React from 'react'
-import { useState } from 'react';
-import profile from "../public/cm logo-edited.png";
-import Image from 'next/image';
-import Link from 'next/link';
+"use client";
+import React, { useState } from "react";
+import profile from "../public/profileavatar.png";
+import Image from "next/image";
+import Link from "next/link";
+import { Search, Bell, Menu, X, ChevronRight, Moon } from "lucide-react";
 
-const page = () => {
-    const [isProfileOpen, setIsProfileOpen] = useState(false);
-    const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+const Page = () => {
+  const [isProfileOpen, setIsProfileOpen] = useState(false);
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const [active, setActive] = useState("Dashboard");
+
+  const navItems = [
+    { name: "Dashboard", path: "/dashboard" },
+    { name: "Reports", path: "/about" },
+    { name: "Kanban", path: "/kanban" },
+    { name: "Analytics", path: "/analytics" },
+  ];
+
   return (
-    <div>
-        {/* Top Navbar */}
-              <nav className="w-full bg-neutral-900 border-b border-neutral-800 shadow-sm">
-                <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                  <div className="flex justify-between h-8 items-center">
-                    {/* Left: Logo */}
-                    <div className="text-xl font-bold text-white">MyApp</div>
-        
-                    {/* Desktop Nav */}
-                    <div className="hidden md:flex items-center space-x-6">
-                      <a
-                        href="/home"
-                        className="relative text-white font-medium px-2 py-1 transition-colors duration-200 
-                                  after:absolute after:bottom-0 after:left-0 after:h-[2px] after:w-0 after:bg-white 
-                                  after:transition-all after:duration-300 hover:after:w-full hover:text-gray-200"
-                      >
-                        Home
-                      </a>
-                      <a
-                        href="/about"
-                        className="relative text-white font-medium px-2 py-1 transition-colors duration-200 
-                                  after:absolute after:bottom-0 after:left-0 after:h-[2px] after:w-0 after:bg-white 
-                                  after:transition-all after:duration-300 hover:after:w-full hover:text-gray-200"
-                      >
-                        About
-                      </a>
-                      <Link href="#" className="relative text-white font-medium px-2 py-1 transition-colors duration-200 
-                                  after:absolute after:bottom-0 after:left-0 after:h-[2px] after:w-0 after:bg-white 
-                                  after:transition-all after:duration-300 hover:after:w-full hover:text-gray-200">
-                        Reports
-                      </Link>
-                      <a href="#" className="relative text-white font-medium px-2 py-1 transition-colors duration-200 
-                                  after:absolute after:bottom-0 after:left-0 after:h-[2px] after:w-0 after:bg-white 
-                                  after:transition-all after:duration-300 hover:after:w-full hover:text-gray-200">
-                        Settings
-                      </a>
-                    </div>
-        
-                    {/* Search */}
-                    <div className="hidden md:block">
-                      <input
-                        type="text"
-                        placeholder="Search..."
-                        className="bg-neutral-800 border border-neutral-700 rounded-lg px-3 py-1 text-sm text-white 
-                       placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
-                      />
-                    </div>
-        
-                    {/* Right Side */}
-                    <div className="flex items-center space-x-4">
-                      {/* Notifications */}
-                      <button className="relative">
-                        <span className="material-icons text-white hover:text-gray-300 transition-colors">
-                          notifications
-                        </span>
-                        <span className="absolute -top-1 -right-1 bg-red-500 text-white text-xs font-bold rounded-full px-1">
-                          3
-                        </span>
-                      </button>
+    <div className="bg-gray-100">
+      <nav className="w-full bg-white border border-gray-200 rounded-xl shadow-sm">
+        {/* === Top Row === */}
+        <div className="flex items-center justify-between px-6 py-3">
+          {/* Logo */}
+          <div className="flex items-center space-x-2">
+            <div className="h-9 w-9 flex items-center justify-center bg-gray-200 text-gray-700 rounded-lg font-bold">
+              Ⓢ
+            </div>
+            <span className="text-lg font-semibold text-gray-800">Symbol</span>
+          </div>
 
-        
-                      {/* Profile Dropdown */}
-                      <div className="relative">
-                        <button
-                          className="flex items-center space-x-2 text-white hover:text-gray-300 transition-colors"
-                          onClick={() => setIsProfileOpen(!isProfileOpen)}
-                        >
-                          <Image
-                            src={profile}
-                            alt="Profile"
-                            width={32}
-                            height={32}
-                            className="rounded-full border border-neutral-700 hover:border-blue-500 transition-all"
-                          />
-                          <span className="hidden md:block">ABC..</span>
-                        </button>
+          {/* Search */}
+          <div className="hidden md:flex flex-1 justify-center px-6">
+            <div className="relative w-80">
+              <Search className="absolute left-3 top-2.5 h-4 w-4 text-gray-400" />
+              <input
+                type="text"
+                placeholder="Search"
+                className="w-full pl-9 pr-3 py-2 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-gray-400 text-sm"
+              />
+            </div>
+          </div>
 
-                        {isProfileOpen && (
-                          <div className="absolute right-0 mt-2 w-48 bg-neutral-900 border border-neutral-700 rounded-xl shadow-lg py-2">
-                            <a
-                              href="#"
-                              className="block px-4 py-2 text-white hover:bg-neutral-800"
-                            >
-                              Profile
-                            </a>
-                            <a
-                              href="#"
-                              className="block px-4 py-2 text-white hover:bg-neutral-800"
-                            >
-                              Settings
-                            </a>
-                            <a
-                              href="#"
-                              className="block px-4 py-2 text-white hover:bg-neutral-800"
-                            >
-                              Logout
-                            </a>
-                          </div>
-                        )}
-                      </div>
+          {/* Right icons */}
+          <div className="flex items-center space-x-4">
+            {/* Mobile menu toggle */}
+            <button
+              className="md:hidden p-2 rounded-md hover:bg-gray-100"
+              onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+            >
+              {isMobileMenuOpen ? (
+                <X className="h-6 w-6 text-gray-600" />
+              ) : (
+                <Menu className="h-6 w-6 text-gray-600" />
+              )}
+            </button>
 
-        
-                      {/* Mobile Hamburger */}
-                      <button
-                        className="md:hidden"
-                        onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-                      >
-                        <span className="material-icons">menu</span>
-                      </button>
-                    </div>
-                  </div>
+            {/* Notifications */}
+            <button className="relative hidden md:block p-2 rounded-full hover:bg-gray-100">
+              <Bell className="h-5 w-5 text-gray-600" />
+              <span className="absolute -top-1 -right-1 bg-red-500 text-white text-xs font-bold rounded-full px-1">
+                3
+              </span>
+            </button>
+
+            {/* Profile */}
+            <div className="relative">
+              <button
+                onClick={() => setIsProfileOpen(!isProfileOpen)}
+                className="flex items-center"
+              >
+                <Image
+                  src={profile}
+                  alt="Profile"
+                  width={36}
+                  height={36}
+                  className="rounded-full border border-gray-300"
+                />
+              </button>
+
+              {isProfileOpen && (
+                <div className="absolute right-0 mt-2 w-48 bg-white border border-gray-200 rounded-xl shadow-md py-2 z-50">
+                  <a className="block px-4 py-2 text-gray-700 hover:bg-gray-100">
+                    Profile
+                  </a>
+                  <a className="block px-4 py-2 text-gray-700 hover:bg-gray-100">
+                    Settings
+                  </a>
+                  <a className="block px-4 py-2 text-gray-700 hover:bg-gray-100">
+                    Logout
+                  </a>
                 </div>
-        
-                {/* Mobile Menu */}
-                {isMobileMenuOpen && (
-                  <div className="md:hidden bg-white border-t">
-                    <a
-                      href="/home"
-                      className="block px-4 py-2 text-gray-700 hover:bg-gray-100"
-                    >
-                      Home
-                    </a>
-                    <a
-                      href="/about"
-                      className="block px-4 py-2 text-gray-700 hover:bg-gray-100"
-                    >
-                      About
-                    </a>
-                    <a
-                      href="#"
-                      className="block px-4 py-2 text-gray-700 hover:bg-gray-100"
-                    >
-                      Reports
-                    </a>
-                    <a
-                      href="#"
-                      className="block px-4 py-2 text-gray-700 hover:bg-gray-100"
-                    >
-                      Settings
-                    </a>
-                    <div className="px-4 py-2">
-                      <input
-                        type="text"
-                        placeholder="Search..."
-                        className="w-full border rounded-lg px-3 py-1 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
-                      />
-                    </div>
-                  </div>
-                )}
-              </nav>
-    </div>
-  )
-}
+              )}
+            </div>
+          </div>
+        </div>
 
-export default page;
+        {/* === Bottom Nav === */}
+        <div className="hidden md:flex items-center justify-between px-6 py-1 border-t bg-gray-50 text-sm font-medium">
+          {/* Breadcrumbs */}
+          <div className="flex items-center space-x-2 text-gray-500">
+            <span className="hover:text-gray-700 cursor-pointer">Home</span>
+            <ChevronRight className="h-4 w-4 text-gray-400" />
+            <span className="hover:text-gray-700 cursor-pointer">Dashboard</span>
+          </div>
+
+          {/* Navigation links */}
+          <div className="flex space-x-6 mx-auto">
+            {navItems.map((item) => (
+              <Link
+                key={item.path} // ✅ dynamic unique key
+                href={item.path}
+                onClick={() => setActive(item.name)}
+                className={`transition-colors ${
+                  active === item.name
+                    ? "text-gray-900 font-semibold"
+                    : "text-gray-600 hover:text-gray-900"
+                }`}
+              >
+                {item.name}
+              </Link>
+            ))}
+          </div>
+
+          {/* CTA */}
+          <div>
+            <button className="p-2 rounded-lg border border-gray-300 text-gray-700 hover:bg-gray-100 transition">
+              <Moon className="h-5 w-5" />
+            </button>
+          </div>
+        </div>
+
+        {/* === Mobile Menu === */}
+        {isMobileMenuOpen && (
+          <div className="md:hidden border-t bg-white px-6 py-4 space-y-4 text-sm font-medium">
+            {/* Search */}
+            <div className="relative w-full">
+              <Search className="absolute left-3 top-2.5 h-4 w-4 text-gray-400" />
+              <input
+                type="text"
+                placeholder="Search"
+                className="w-full pl-9 pr-3 py-2 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-gray-400 text-sm"
+              />
+            </div>
+
+            {/* Mobile links */}
+            {navItems.map((item) => (
+              <Link
+                key={item.path} // ✅ dynamic unique key
+                href={item.path}
+                onClick={() => {
+                  setActive(item.name);
+                  setIsMobileMenuOpen(false);
+                }}
+                className={`block w-full text-left px-3 py-2 rounded-md ${
+                  active === item.name
+                    ? "bg-gray-100 text-gray-900"
+                    : "text-gray-600 hover:text-gray-900"
+                }`}
+              >
+                {item.name}
+              </Link>
+            ))}
+
+            {/* CTA */}
+            <button className="p-2 text-gray-700 hover:bg-gray-100 transition">
+              <Moon className="h-5 w-5" />
+            </button>
+          </div>
+        )}
+      </nav>
+    </div>
+  );
+};
+
+export default Page;
