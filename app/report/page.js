@@ -2,12 +2,12 @@ import React from 'react'
 
 const page = () => {
   return (
-    <div className="flex-grow w-full overflow-y-auto p-0">
+    <div className="flex-grow w-full overflow-y-auto p-2">
       {/* Content Area */}
         <main className="flex-grow w-full mx-auto px-0 py-2">
             <div className="bg-white">
                 <p>
-                    this is Report.
+                    this is Report
                 </p>
             </div>
         </main>
@@ -16,4 +16,4 @@ const page = () => {
   )
 }
 
-export default page
+export default page;

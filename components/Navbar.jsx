@@ -12,9 +12,13 @@ const Page = () => {
 
   const navItems = [
     { name: "Dashboard", path: "/dashboard" },
-    { name: "Reports", path: "/about" },
+    { name: "Reports", path: "/report" },
     { name: "Kanban", path: "/kanban" },
     { name: "Analytics", path: "/analytics" },
+    { name: "Forms", path: "#" },
+    { name: "Analytics", path: "#" },
+    { name: "Analytics", path: "#" },
+    { name: "Analytics", path: "#" },
   ];
 
   return (
@@ -56,6 +60,10 @@ const Page = () => {
               )}
             </button>
 
+            {/* Theme toggler */}
+            <button className="p-2 rounded-lg text-gray-700 hover:bg-gray-100 transition">
+              <Moon className="h-5 w-5" />
+            </button>
             {/* Notifications */}
             <button className="relative hidden md:block p-2 rounded-full hover:bg-gray-100">
               <Bell className="h-5 w-5 text-gray-600" />
@@ -97,13 +105,13 @@ const Page = () => {
         </div>
 
         {/* === Bottom Nav === */}
-        <div className="hidden md:flex items-center justify-between px-6 py-1 border-t bg-gray-50 text-sm font-medium">
+        <div className="hidden md:flex items-center justify-between px-10 py-2 border-t border-gray-200 bg-gray-50 text-sm font-medium">
           {/* Breadcrumbs */}
-          <div className="flex items-center space-x-2 text-gray-500">
+          {/* <div className="flex items-center space-x-2 text-gray-500">
             <span className="hover:text-gray-700 cursor-pointer">Home</span>
             <ChevronRight className="h-4 w-4 text-gray-400" />
             <span className="hover:text-gray-700 cursor-pointer">Dashboard</span>
-          </div>
+          </div> */}
 
           {/* Navigation links */}
           <div className="flex space-x-6 mx-auto">
@@ -125,9 +133,9 @@ const Page = () => {
 
           {/* CTA */}
           <div>
-            <button className="p-2 rounded-lg border border-gray-300 text-gray-700 hover:bg-gray-100 transition">
+            {/* <button className="p-2 rounded-lg text-gray-700 hover:bg-gray-100 transition">
               <Moon className="h-5 w-5" />
-            </button>
+            </button> */}
           </div>
         </div>
 
