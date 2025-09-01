@@ -3,7 +3,7 @@ import React, { useState } from "react";
 import profile from "../public/profileavatar.png";
 import Image from "next/image";
 import Link from "next/link";
-import { Search, Bell, Menu, X, ChevronRight, Moon } from "lucide-react";
+import { Search, Bell, Menu, X, ChevronRight, Moon, Settings } from "lucide-react";
 
 const Page = () => {
   const [isProfileOpen, setIsProfileOpen] = useState(false);
@@ -11,15 +11,52 @@ const Page = () => {
   const [active, setActive] = useState("Dashboard");
 
   const navItems = [
-    { name: "Dashboard", path: "/dashboard" },
-    { name: "Reports", path: "/report" },
-    { name: "Kanban", path: "/kanban" },
-    { name: "Analytics", path: "/analytics" },
-    { name: "Forms", path: "#" },
-    { name: "Analytics", path: "#" },
-    { name: "Analytics", path: "#" },
-    { name: "Analytics", path: "#" },
+    {
+      name: "Dashboard",
+      path: "/dashboard",
+      subItems: [
+        { name: "Marketing", path: "/dashboard/marketing" },
+        { name: "Sales", path: "/dashboard/sales" },
+        { name: "Operations", path: "/report/security" },
+      ],
+    },
+    {
+      name: "Reports",
+      path: "/report",
+      subItems: [
+        { name: "Analytics", path: "/report/#" },
+        { name: "Integration", path: "/report/#" },
+        { name: "Security", path: "/report/#" },
+      ],
+    },
+    {
+      name: "Analytics",
+      path: "#",
+      subItems: [
+        { name: "Basic", path: "" },
+        { name: "Pro", path: "" },
+        { name: "Enterprise", path: "" },
+      ],
+    },
+    {
+      name: "Forms",
+      path: "#",
+      subItems: [
+        { name: "Case Study 1", path: "" },
+        { name: "Case Study 2", path: "" },
+      ],
+    },
+    {
+      name: "Analytics",
+      path: "#",
+      subItems: [
+        { name: "Company", path: "" },
+        { name: "Team", path: "" },
+        { name: "Careers", path: "" },
+      ],
+    },
   ];
+
 
   return (
     <div className="bg-gray-100">
@@ -105,39 +142,56 @@ const Page = () => {
         </div>
 
         {/* === Bottom Nav === */}
-        <div className="hidden md:flex items-center justify-between px-10 py-2 border-t border-gray-200 bg-gray-50 text-sm font-medium">
-          {/* Breadcrumbs */}
-          {/* <div className="flex items-center space-x-2 text-gray-500">
-            <span className="hover:text-gray-700 cursor-pointer">Home</span>
-            <ChevronRight className="h-4 w-4 text-gray-400" />
-            <span className="hover:text-gray-700 cursor-pointer">Dashboard</span>
-          </div> */}
-
-          {/* Navigation links */}
-          <div className="flex space-x-6 mx-auto">
+        <div className="hidden md:flex items-center justify-between px-10 py-2 border-t border-gray-200 bg-white text-sm font-medium">
+          {/* Left Nav */}
+          <div className="flex space-x-8">
             {navItems.map((item) => (
-              <Link
-                key={item.path} // ✅ dynamic unique key
-                href={item.path}
-                onClick={() => setActive(item.name)}
-                className={`transition-colors ${
-                  active === item.name
-                    ? "text-gray-900 font-semibold"
-                    : "text-gray-600 hover:text-gray-900"
-                }`}
-              >
-                {item.name}
-              </Link>
+              <div key={item.path} className="relative group">
+                {/* Main link with dropdown arrow */}
+                <button
+                  onClick={() => setActive(item.name)}
+                  className={`flex items-center transition-colors ${
+                    active === item.name
+                      ? "text-blue-600 font-semibold"
+                      : "text-gray-600 hover:text-blue-600"
+                  }`}
+                >
+                  {item.name}
+                  <svg
+                    className="ml-1 h-4 w-4"
+                    xmlns="http://www.w3.org/2000/svg"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke="currentColor"
+                  >
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+                  </svg>
+                </button>
+
+                {/* Dropdown menu */}
+                {item.subItems && (
+                  <div className="absolute left-0 hidden group-hover:block bg-white border border-gray-200 shadow-md rounded-lg mt-2 min-w-[180px] z-50">
+                    {item.subItems.map((sub) => (
+                      <Link
+                        key={sub.path}
+                        href={sub.path}
+                        className="block px-4 py-2 text-gray-600 hover:bg-gray-100"
+                      >
+                        {sub.name}
+                      </Link>
+                    ))}
+                  </div>
+                )}
+              </div>
             ))}
           </div>
 
-          {/* CTA */}
-          <div>
-            {/* <button className="p-2 rounded-lg text-gray-700 hover:bg-gray-100 transition">
-              <Moon className="h-5 w-5" />
-            </button> */}
-          </div>
+          {/* Right side: Moon */}
+          <button className="p-2 rounded-lg text-gray-600 hover:bg-gray-100 transition">
+            <Settings className="h-5 w-5" />
+          </button>
         </div>
+
 
         {/* === Mobile Menu === */}
         {isMobileMenuOpen && (
