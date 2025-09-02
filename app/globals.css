@@ -1,10 +1,32 @@
 @import "tailwindcss";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
+* {
+  transition: background-color 0.3s ease, color 0.3s ease;
 }
 
+/* Default (light theme) */
+:root {
+  --background: #FFFFFF;
+  --foreground: #1E1E1E;
+  --hover-bg: #f3f4f6; /* gray-100 */
+  --border-color: #e5e7eb; /* gray-200 */
+  --shadow-color: rgba(0, 0, 0, 0.1); /* light mode shadow */
+  --border-top: #e5e7eb; /* gray-200 for light */
+  --dropdown-shadow: 0 4px 6px rgba(0,0,0,0.1); /* light shadow */
+}
+
+/* Dark theme overrides when <html class="dark"> is set */
+html.dark {
+  --background: #16181D;
+  --foreground: #C0C4CE;
+  --hover-bg: #1f2937; /* gray-800 */
+  --border-color: #374151; /* gray-700 */
+  --shadow-color: rgba(255, 255, 255, 0.1); /* dark mode "inverted" shadow */
+  --border-top: #374151; /* gray-700 for dark */
+  --dropdown-shadow: 0 4px 12px rgba(0,0,0,0.6); /* darker shadow */
+}
+
+/* Tailwind inline variables */
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
@@ -12,15 +34,17 @@
   --font-mono: var(--font-geist-mono);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
-}
-
 body {
   background: var(--background);
   color: var(--foreground);
   font-family: Arial, Helvetica, sans-serif;
+}
+
+/* Reusable hover utility */
+.btn-hover {
+  background-color: transparent;
+  transition: background-color 0.2s;
+}
+.btn-hover:hover {
+  background-color: var(--hover-bg);
 }

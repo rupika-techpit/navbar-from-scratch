@@ -4,13 +4,16 @@ import profile from "../public/profileavatar.png";
 import Image from "next/image";
 import Link from "next/link";
 import { Search, Bell, Menu, X, Moon, Settings } from "lucide-react";
+import { useTheme } from "next-themes";
+import Notifications from "./Notification";
 
 const Page = () => {
   const [isProfileOpen, setIsProfileOpen] = useState(false);
   const [isSettingsOpen, setIsSettingsOpen] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [active, setActive] = useState("Dashboard");
-  const [openDropdown, setOpenDropdown] = useState(null); // track which dropdown is open
+  const [openDropdown, setOpenDropdown] = useState(null);
+  const { theme, setTheme } = useTheme();
 
   const toggleDropdown = (name) => {
     setOpenDropdown(openDropdown === name ? null : name);
@@ -30,51 +33,51 @@ const Page = () => {
       name: "Reports",
       path: "/report",
       subItems: [
-        { name: "Analytics", path: "/report/#" },
-        { name: "Integration", path: "/report/#" },
-        { name: "Security", path: "/report/#" },
+        { name: "Analytics", path: "" },
+        { name: "Integration", path: "" },
+        { name: "Security", path: "" },
       ],
     },
     {
       name: "Analytics",
-      path: "#",
+      path: "/analytics",
       subItems: [
-        { name: "Basic", path: "" },
-        { name: "Pro", path: "" },
-        { name: "Enterprise", path: "" },
+        { name: "Basic", path: "/analytics/basic" },
+        { name: "Pro", path: "/analytics/pro" },
+        { name: "Enterprise", path: "/analytics/enterprise" },
       ],
     },
     {
       name: "Forms",
-      path: "#",
+      path: "/forms",
       subItems: [
-        { name: "Case Study 1", path: "" },
-        { name: "Case Study 2", path: "" },
+        { name: "Case Study 1", path: "/forms/case1" },
+        { name: "Case Study 2", path: "/forms/case2" },
       ],
     },
     {
       name: "Analytic",
-      path: "#",
+      path: "/analytic",
       subItems: [
-        { name: "About", path: "" },
-        { name: "Team", path: "" },
-        { name: "Careers", path: "" },
+        { name: "About", path: "/analytic/about" },
+        { name: "Team", path: "/analytic/team" },
+        { name: "Careers", path: "/analytic/career" },
       ],
     },
-    
   ];
 
   return (
-    <div className="bg-gray-100">
-      <nav className="w-full bg-white border border-gray-200 rounded-xl shadow-sm">
+    <div className="bg-background text-foreground">
+      <nav className="w-full bg-background border rounded-xl shadow-sm"style={{ borderColor: "var(--border-color)", boxShadow: "0 1px 2px var(--shadow-color)" }}>
+
         {/* === Top Row === */}
         <div className="flex items-center justify-between px-6 py-3">
           {/* Logo */}
           <div className="flex items-center space-x-2">
-            <div className="h-9 w-9 flex items-center justify-center bg-gray-200 text-gray-700 rounded-lg font-bold">
+            <div className="h-9 w-9 flex items-center justify-center bg-transparent text-foreground rounded-lg font-bold">
               Ⓢ
             </div>
-            <span className="text-lg font-semibold text-gray-800">Symbol</span>
+            <span className="text-lg font-semibold">Symbol</span>
           </div>
 
           {/* Search */}
@@ -84,7 +87,7 @@ const Page = () => {
               <input
                 type="text"
                 placeholder="Search"
-                className="w-full pl-9 pr-3 py-2 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-gray-400 text-sm"
+                className="w-full pl-9 pr-3 py-2 rounded-lg border border-gray-300 bg-background text-foreground focus:outline-none focus:ring-2 focus:ring-gray-400 text-sm"
               />
             </div>
           </div>
@@ -93,27 +96,31 @@ const Page = () => {
           <div className="flex items-center space-x-4">
             {/* Mobile menu toggle */}
             <button
-              className="md:hidden p-2 rounded-md hover:bg-gray-100"
+              className="md:hidden p-2 rounded-md hover:bg-[var(--hover-bg)] dark:hover:bg-[var(--hover-bg)]"
               onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
             >
               {isMobileMenuOpen ? (
-                <X className="h-6 w-6 text-gray-600" />
+                <X className="h-6 w-6" />
               ) : (
-                <Menu className="h-6 w-6 text-gray-600" />
+                <Menu className="h-6 w-6" />
               )}
             </button>
 
             {/* Theme toggler */}
-            <button className="p-2 rounded-lg text-gray-700 hover:bg-gray-100 transition">
+            <button
+              onClick={() => setTheme(theme === "light" ? "dark" : "light")}
+              className="p-2 rounded-lg hover:bg-[var(--hover-bg)] dark:hover:bg-[var(--hover-bg)] transition"
+            >
               <Moon className="h-5 w-5" />
             </button>
 
             {/* Notifications */}
-            <button className="relative hidden md:block p-2 rounded-full hover:bg-gray-100">
-              <Bell className="h-5 w-5 text-gray-600" />
+            <button className="relative p-2 rounded-full hover:bg-[var(--hover-bg)] dark:hover:bg-[var(--hover-bg)]">
+              {/* <Bell className="h-5 w-5" />
               <span className="absolute -top-1 -right-1 bg-red-500 text-white text-xs font-bold rounded-full px-1">
                 3
-              </span>
+              </span> */}
+              <Notifications/>
             </button>
 
             {/* Profile */}
@@ -132,31 +139,62 @@ const Page = () => {
               </button>
 
               {isProfileOpen && (
-                <div className="absolute right-0 mt-2 w-56 bg-white rounded-xl shadow-lg py-3 z-50">
-                  <div className="px-4 py-2">
-                    <p className="text-sm font-medium text-gray-900">Sophia Patel</p>
-                    <p className="text-xs text-gray-500">sophia.patel@email.com</p>
+                <div
+                  className="absolute right-0 mt-2 w-56 bg-background rounded-xl shadow-lg py-3 z-50"
+                  style={{ boxShadow: "var(--dropdown-shadow)" }}
+                >
+                  {/* Profile Info */}
+                  <div className="px-4 pb-3 border-b border-border-color flex items-center justify-between">
+                    {/* Left: Name + Email */}
+                    <div>
+                      <p className="text-sm font-medium">Sophia Patel</p>
+                      <p className="text-xs text-gray-500">sophia.patel@email.com</p>
+                    </div>
+
+                    {/* Right: View button */}
+                    <Link href="/profile" className="p-1 rounded hover:bg-[var(--hover-bg)]">
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        className="h-4 w-4 text-gray-500"
+                        fill="none"
+                        viewBox="0 0 24 24"
+                        stroke="currentColor"
+                      >
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                      </svg>
+                    </Link>
+                  </div>
+
+
+                  {/* Actions */}
+                  <div className="mt-1">
+                    <Link
+                      href="#"
+                      className="block px-4 py-2 text-sm text-foreground hover:bg-[var(--hover-bg)] dark:hover:bg-[var(--hover-bg)] rounded-b-xl"
+                    >
+                      Logout
+                    </Link>
                   </div>
                 </div>
+
               )}
             </div>
-
           </div>
         </div>
 
         {/* === Bottom Nav === */}
-        <div className="hidden md:flex items-center justify-between px-10 py-2 border-t border-gray-200 bg-gray-50 text-sm font-medium">
+        <div className="hidden md:flex items-center justify-between px-10 py-2 border-t bg-background text-sm font-medium"style={{ borderTopColor: "var(--border-top)" }}>
+
           {/* Left Nav with dropdowns */}
           <div className="flex space-x-8">
             {navItems.map((item) => (
               <div key={item.path} className="relative">
-                {/* Main button */}
                 <button
                   onClick={() => toggleDropdown(item.name)}
                   className={`inline-flex items-center px-3 py-2 text-sm font-medium rounded-md ${
                     active === item.name
-                      ? "text-gray-600 bg-gray-100"
-                      : "text-gray-600 hover:gray-800 hover:bg-gray-100"
+                      ? "bg-[var(--hover-bg)] dark:bg-[var(--hover-bg)]"
+                      : "hover:bg-[var(--hover-bg)] dark:hover:bg-[var(--hover-bg)]"
                   }`}
                 >
                   {item.name}
@@ -178,9 +216,8 @@ const Page = () => {
                   </svg>
                 </button>
 
-                {/* Dropdown */}
                 {openDropdown === item.name && item.subItems && (
-                  <div className="absolute left-0 mt-2 w-48 rounded-md bg-white shadow-lg z-50">
+                  <div className="absolute left-0 mt-2 w-48 rounded-md bg-background z-50" style={{ boxShadow: "var(--dropdown-shadow)"}}>
                     <div className="py-1">
                       {item.subItems.map((sub) => (
                         <Link
@@ -190,7 +227,7 @@ const Page = () => {
                             setActive(item.name);
                             setOpenDropdown(null);
                           }}
-                          className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-gray-900"
+                          className="block px-4 py-2 text-sm hover:bg-[var(--hover-bg)] dark:hover:bg-[var(--hover-bg)]"
                         >
                           {sub.name}
                         </Link>
@@ -202,59 +239,52 @@ const Page = () => {
             ))}
           </div>
 
-          {/* Right side: Settings icon */}
-          {/* <button className="p-2 rounded-lg text-gray-600 hover:bg-gray-100 transition">
-            <Settings className="h-5 w-5" />
-          </button> */}
-          {/* Settings Dropdown */}
+          {/* Settings */}
           <div className="relative">
             <button
               onClick={() => setIsSettingsOpen(!isSettingsOpen)}
-              className="p-2 rounded-lg text-gray-600 hover:bg-gray-100 transition"
+              className="p-2 rounded-lg hover:bg-[var(--hover-bg)] dark:hover:bg-[var(--hover-bg)] transition" 
             >
               <Settings className="h-5 w-5" />
             </button>
 
             {isSettingsOpen && (
-              <div className="absolute right-0 mt-2 w-48 bg-white rounded-xl shadow-lg py-2 z-50">
+              <div className="absolute right-0 mt-2 w-48 bg-background rounded-xl py-2 z-50" style={{ boxShadow: "var(--dropdown-shadow)"}}>
                 <Link
                   href="#"
-                  className="block px-4 py-2 text-gray-700 hover:bg-gray-100"
+                  className="block px-4 py-2 hover:bg-[var(--hover-bg)] dark:hover:bg-[var(--hover-bg)]"
                 >
                   Profile
                 </Link>
                 <Link
                   href="#"
-                  className="block px-4 py-2 text-gray-700 hover:bg-gray-100"
+                  className="block px-4 py-2 hover:bg-[var(--hover-bg)] dark:hover:bg-[var(--hover-bg)]"
                 >
                   Settings
                 </Link>
                 <Link
                   href="#"
-                  className="block px-4 py-2 text-gray-700 hover:bg-gray-100"
+                  className="block px-4 py-2 hover:bg-[var(--hover-bg)] dark:hover:bg-[var(--hover-bg)]"
                 >
                   Logout
                 </Link>
               </div>
             )}
           </div>
-
         </div>
 
         {/* === Mobile Menu === */}
         {isMobileMenuOpen && (
-          <div className="md:hidden border-t bg-white px-6 py-4 space-y-4 text-sm font-medium">
-            {/* Search */}
+          <div className="md:hidden bg-background px-6 py-4 space-y-4 text-sm font-medium" style={{ borderTopColor: "var(--border-top)" }}>
             <div className="relative w-full">
               <Search className="absolute left-3 top-2.5 h-4 w-4 text-gray-400" />
               <input
                 type="text"
                 placeholder="Search"
-                className="w-full pl-9 pr-3 py-2 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-gray-400 text-sm"
+                className="w-full pl-9 pr-3 py-2 rounded-lg border border-gray-300 bg-background text-foreground focus:outline-none focus:ring-2 focus:ring-gray-400 text-sm"
               />
             </div>
 
-            {/* Mobile links */}
             {navItems.map((item) => (
               <Link
                 key={item.path}
@@ -265,18 +295,45 @@ const Page = () => {
                 }}
                 className={`block w-full text-left px-3 py-2 rounded-md ${
                   active === item.name
-                    ? "bg-gray-100 text-gray-900"
-                    : "text-gray-600 hover:text-gray-900"
+                    ? "bg-gray-100 dark:bg-gray-800"
+                    : "hover:bg-[var(--hover-bg)] dark:hover:bg-[var(--hover-bg)]"
                 }`}
               >
                 {item.name}
               </Link>
             ))}
 
-            {/* CTA */}
-            <button className="p-2 text-gray-700 hover:bg-gray-100 transition">
-              <Moon className="h-5 w-5" />
+            <div className="relative">
+            <button
+              onClick={() => setIsSettingsOpen(!isSettingsOpen)}
+              className="p-2 rounded-lg hover:bg-[var(--hover-bg)] dark:hover:bg-[var(--hover-bg)] transition" 
+            >
+              <Settings className="h-5 w-5" />
             </button>
+
+            {isSettingsOpen && (
+              <div className="absolute left-0 mt-2 w-48 bg-background rounded-xl py-2 z-50" style={{ boxShadow: "var(--dropdown-shadow)"}}>
+                <Link
+                  href="#"
+                  className="block px-4 py-2 hover:bg-[var(--hover-bg)] dark:hover:bg-[var(--hover-bg)]"
+                >
+                  Profile
+                </Link>
+                <Link
+                  href="#"
+                  className="block px-4 py-2 hover:bg-[var(--hover-bg)] dark:hover:bg-[var(--hover-bg)]"
+                >
+                  Settings
+                </Link>
+                <Link
+                  href="#"
+                  className="block px-4 py-2 hover:bg-[var(--hover-bg)] dark:hover:bg-[var(--hover-bg)]"
+                >
+                  Logout
+                </Link>
+              </div>
+            )}
+          </div>
           </div>
         )}
       </nav>

@@ -7,6 +7,7 @@ import "./globals.css";
 import Navbar from '../components/Navbar';
 import Sidebar from '../components/Sidebar';
 import Footer from '../components/Footer';
+import { ThemeProvider } from "next-themes";
 
 
 
@@ -31,6 +32,7 @@ export default function RootLayout({ children }) {
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
+        <ThemeProvider attribute="class" defaultTheme="light">
         <div className="flex flex-col min-h-screen">
           {/* Navbar stays at the top */}
           <Navbar />
@@ -44,6 +46,7 @@ export default function RootLayout({ children }) {
           {/* Fixed Footer */}
           <Footer />
         </div>
+        </ThemeProvider>
       </body>
     </html>
   );
