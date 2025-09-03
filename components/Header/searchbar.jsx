@@ -3,7 +3,6 @@ import React, { useState } from "react";
 import Link from "next/link";
 import { Search } from "lucide-react";
 
-// Mock search data (replace with API if needed)
 const mockData = [
   { id: 1, title: "Dashboard Overview", link: "/dashboard" },
   { id: 2, title: "Marketing Report", link: "/dashboard/subModule" },
@@ -19,7 +18,6 @@ const SearchBar = () => {
   const [query, setQuery] = useState("");
   const [isFocused, setIsFocused] = useState(false);
 
-  // filter results
   const results = mockData
     .filter((item) =>
       item.title.toLowerCase().includes(query.toLowerCase())
@@ -29,24 +27,25 @@ const SearchBar = () => {
   return (
     <div className="relative w-80">
       {/* Input */}
-      <Search className="absolute left-3 top-2.5 h-4 w-4 text-gray-400" />
+      <Search className="absolute left-3 top-2.5 h-4 w-4 text-[var(--muted-foreground)]" />
       <input
         type="text"
         placeholder="Search"
         value={query}
         onChange={(e) => setQuery(e.target.value)}
         onFocus={() => setIsFocused(true)}
-        onBlur={() => setTimeout(() => setIsFocused(false), 200)} // delay so clicks register
-        className="w-full pl-9 pr-3 py-2 rounded-lg border border-gray-300 
-                   bg-background text-foreground focus:outline-none 
-                   focus:ring-2 focus:ring-gray-400 text-sm"
+        onBlur={() => setTimeout(() => setIsFocused(false), 200)}
+        className="w-full pl-9 pr-3 py-2 rounded-lg 
+                   border bg-background text-foreground text-sm 
+                   focus:outline-none focus:ring-2 focus:ring-[var(--border-color)]"
+        style={{ borderColor: "var(--border-color)" }}
       />
 
       {/* Dropdown */}
       {isFocused && query && (
         <div
-          className="absolute mt-1 w-full bg-background rounded-lg shadow-lg border 
-                     border-border-color z-50"
+          className="absolute mt-1 w-full bg-background rounded-lg shadow-lg z-50"
+          style={{ border: "1px solid var(--border-color)", boxShadow: "var(--dropdown-shadow)" }}
         >
           <ul className="max-h-60 overflow-y-auto text-sm">
             {results.length > 0 ? (
@@ -61,13 +60,15 @@ const SearchBar = () => {
                 </li>
               ))
             ) : (
-              <li className="px-4 py-2 text-gray-500">No results found</li>
+              <li className="px-4 py-2 text-[var(--muted-foreground)]">
+                No results found
+              </li>
             )}
           </ul>
 
           {/* See all results */}
           {results.length > 0 && (
-            <div className="border-t border-border-color">
+            <div style={{ borderTop: "1px solid var(--border-color)" }}>
               <Link
                 href={`/search?query=${query}`}
                 className="block px-4 py-2 text-blue-500 hover:bg-[var(--hover-bg)]"

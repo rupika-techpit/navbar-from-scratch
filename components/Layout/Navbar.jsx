@@ -272,14 +272,7 @@ const Page = () => {
         {/* === Mobile Menu === */}
         {isMobileMenuOpen && (
           <div className="md:hidden bg-background px-6 py-4 space-y-4 text-sm font-medium" style={{ borderTopColor: "var(--border-top)" }}>
-            <div className="relative w-full">
-              <Search className="absolute left-3 top-2.5 h-4 w-4 text-gray-400" />
-              <input
-                type="text"
-                placeholder="Search"
-                className="w-full pl-9 pr-3 py-2 rounded-lg border border-gray-300 bg-background text-foreground focus:outline-none focus:ring-2 focus:ring-gray-400 text-sm"
-              />
-            </div>
+            <SearchBar />
 
             {navItems.map((item) => (
               <Link
@@ -291,7 +284,7 @@ const Page = () => {
                 }}
                 className={`block w-full text-left px-3 py-2 rounded-md ${
                   active === item.name
-                    ? "bg-gray-100 dark:bg-gray-800"
+                    ? "bg-background dark:bg-background"
                     : "hover:bg-[var(--hover-bg)] dark:hover:bg-[var(--hover-bg)]"
                 }`}
               >
