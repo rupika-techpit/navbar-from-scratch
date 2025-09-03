@@ -9,9 +9,7 @@ const page = () => {
                 <p>
                     this is home page
                 </p>
-                {Array.from({ length: 50 }).map((_, i) => (
-                <p key={i}>Line {i + 1}</p>
-                ))}
+                
             </div>
         </main>
 

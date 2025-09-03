@@ -1,11 +1,12 @@
 "use client";
 import React, { useState } from "react";
-import profile from "../public/profileavatar.png";
+import profile from "../../public/profileavatar.png";
 import Image from "next/image";
 import Link from "next/link";
-import { Search, Bell, Menu, X, Moon, Settings } from "lucide-react";
+import { Search, Bell, Menu, X, Moon, Settings, LogOut } from "lucide-react";
 import { useTheme } from "next-themes";
-import Notifications from "./Notification";
+import Notifications from "../Header/Notification";
+import SearchBar from "../Header/searchbar";
 
 const Page = () => {
   const [isProfileOpen, setIsProfileOpen] = useState(false);
@@ -73,23 +74,17 @@ const Page = () => {
         {/* === Top Row === */}
         <div className="flex items-center justify-between px-6 py-3">
           {/* Logo */}
-          <div className="flex items-center space-x-2">
+          <Link href="/home" className="flex items-center space-x-2">
             <div className="h-9 w-9 flex items-center justify-center bg-transparent text-foreground rounded-lg font-bold">
               Ⓢ
             </div>
             <span className="text-lg font-semibold">Symbol</span>
-          </div>
+          </Link>
+
 
           {/* Search */}
           <div className="hidden md:flex flex-1 justify-center px-6">
-            <div className="relative w-80">
-              <Search className="absolute left-3 top-2.5 h-4 w-4 text-gray-400" />
-              <input
-                type="text"
-                placeholder="Search"
-                className="w-full pl-9 pr-3 py-2 rounded-lg border border-gray-300 bg-background text-foreground focus:outline-none focus:ring-2 focus:ring-gray-400 text-sm"
-              />
-            </div>
+            <SearchBar />
           </div>
 
           {/* Right icons */}
@@ -170,8 +165,9 @@ const Page = () => {
                   <div className="mt-1">
                     <Link
                       href="#"
-                      className="block px-4 py-2 text-sm text-foreground hover:bg-[var(--hover-bg)] dark:hover:bg-[var(--hover-bg)] rounded-b-xl"
+                      className="flex items-center gap-2 px-4 py-0 text-sm text-red-500 hover:bg-[var(--hover-bg)] dark:hover:bg-[var(--hover-bg)] rounded-b-xl"
                     >
+                      <LogOut className="w-4 h-4" />
                       Logout
                     </Link>
                   </div>

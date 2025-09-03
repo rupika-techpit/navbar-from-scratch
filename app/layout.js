@@ -4,9 +4,8 @@ import "./globals.css";
   href="https://fonts.googleapis.com/icon?family=Material+Icons"
   rel="stylesheet"
 />
-import Navbar from '../components/Navbar';
-import Sidebar from '../components/Sidebar';
-import Footer from '../components/Footer';
+import Navbar from '../components/Layout/Navbar';
+import Footer from '../components/Layout/Footer';
 import { ThemeProvider } from "next-themes";
 
 
