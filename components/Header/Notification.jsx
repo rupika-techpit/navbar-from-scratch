@@ -108,14 +108,13 @@ import Link from "next/link";
 import React, { useState } from "react";
 import { Dropdown } from "../UI/dropdown/dropdown";
 import { DropdownItem } from "../UI/dropdown/dropdownList";
-import { X, Trash2 } from "lucide-react";
- 
+import { X, Trash2, Bell } from "lucide-react";
+
 export default function NotificationDropdown() {
   const [isOpen, setIsOpen] = useState(false);
-  // track if user has opened the dropdown once
   const [hasOpened, setHasOpened] = useState(false);
- 
-  // Mock notification data with "read" state
+  const [filter, setFilter] = useState("all"); // "all" | "unread"
+
   const [notifications, setNotifications] = useState([
     {
       id: 1,
@@ -124,7 +123,7 @@ export default function NotificationDropdown() {
       project: "Project - Nganter App",
       type: "Project",
       time: "5 min ago",
-      status: "online",
+      minutesAgo: 5,
       read: false,
     },
     {
@@ -134,7 +133,7 @@ export default function NotificationDropdown() {
       project: "Project - ResearchX",
       type: "Document",
       time: "8 min ago",
-      status: "online",
+      minutesAgo: 8,
       read: false,
     },
     {
@@ -144,7 +143,7 @@ export default function NotificationDropdown() {
       project: "Project - DesignPro",
       type: "Task",
       time: "1 hr ago",
-      status: "error",
+      minutesAgo: 60,
       read: true,
     },
     {
@@ -154,7 +153,7 @@ export default function NotificationDropdown() {
       project: "Project - AI Engine",
       type: "Task",
       time: "2 hrs ago",
-      status: "online",
+      minutesAgo: 120,
       read: false,
     },
     {
@@ -164,86 +163,69 @@ export default function NotificationDropdown() {
       project: "Project - CloudHub",
       type: "File",
       time: "3 hrs ago",
-      status: "online",
+      minutesAgo: 180,
       read: false,
     },
   ]);
- 
+
   const toggleDropdown = () => {
     const next = !isOpen;
     setIsOpen(next);
-    if (next) {
-      // when dropdown opens, clear count
-      setHasOpened(true);
-    }
-  }
+    if (next) setHasOpened(true);
+  };
+
   const closeDropdown = () => setIsOpen(false);
- 
-  // unread count but hide if dropdown already opened
-const unreadCount = hasOpened ? 0 : notifications.filter((n) => !n.read).length;
- 
-  // remove single notification
+
+  const unreadCount = hasOpened ? 0 : notifications.filter((n) => !n.read).length;
+
   const removeNotification = (id) => {
     setNotifications((prev) => prev.filter((n) => n.id !== id));
   };
- 
-  // clear all
+
   const clearAll = () => setNotifications([]);
- 
-  // mark one notification as read
+
   const markAsRead = (id) => {
     setNotifications((prev) =>
       prev.map((n) => (n.id === id ? { ...n, read: true } : n))
     );
   };
- 
-  // mark all as read
+
   const markAllAsRead = () => {
     setNotifications((prev) => prev.map((n) => ({ ...n, read: true })));
   };
- 
+
+  // filter + sort notifications
+  const filteredNotifications = [...notifications]
+    .filter((n) => (filter === "unread" ? !n.read : true))
+    .sort((a, b) => a.minutesAgo - b.minutesAgo);
+
   return (
     <div className="relative">
-      {/* Notification button with badge */}
+      {/* Bell Icon */}
       <button
-        className="relative flex items-center justify-center text-foreground transition-colors bg-background border border-gray-200 rounded-full hover:text-gray-700 h-11 w-11 hover:bg-gray-100 dark:border-gray-800 dark:bg-background dark:text-foreground dark:hover:bg-gray-800 dark:hover:text-white"
+        className="relative w-7 h-7 flex items-center justify-center rounded-full hover:bg-[var(--hover-bg)] transition"
         onClick={toggleDropdown}
       >
         {unreadCount > 0 && (
-          <span className="absolute right-0 top-0.5 z-10 flex h-5 w-5 items-center justify-center rounded-full bg-orange-500 text-[11px] font-bold text-white">
-            {unreadCount}
-          </span>
+          <span className="absolute -top-0.5 right-1 block w-2 h-2 rounded-full bg-orange-400 ring-1 ring-background"></span>
         )}
- 
-        <svg
-          className="fill-current"
-          width="20"
-          height="20"
-          viewBox="0 0 20 20"
-        >
-          <path
-            fillRule="evenodd"
-            clipRule="evenodd"
-            d="M10.75 2.29248C10.75 1.87827 10.4143 1.54248 10 1.54248C9.58583 1.54248 9.25004 1.87827 9.25004 2.29248V2.83613C6.08266 3.20733 3.62504 5.9004 3.62504 9.16748V14.4591H3.33337C2.91916 14.4591 2.58337 14.7949 2.58337 15.2091C2.58337 15.6234 2.91916 15.9591 3.33337 15.9591H4.37504H15.625H16.6667C17.0809 15.9591 17.4167 15.6234 17.4167 15.2091C17.4167 14.7949 17.0809 14.4591 16.6667 14.4591H16.375V9.16748C16.375 5.9004 13.9174 3.20733 10.75 2.83613V2.29248ZM14.875 14.4591V9.16748C14.875 6.47509 12.6924 4.29248 10 4.29248C7.30765 4.29248 5.12504 6.47509 5.12504 9.16748V14.4591H14.875ZM8.00004 17.7085C8.00004 18.1228 8.33583 18.4585 8.75004 18.4585H11.25C11.6643 18.4585 12 18.1228 12 17.7085C12 17.2943 11.6643 16.9585 11.25 16.9585H8.75004C8.33583 16.9585 8.00004 17.2943 8.00004 17.7085Z"
-          />
-        </svg>
+        <Bell className="h-6 w-6" />
       </button>
- 
+
       {/* Dropdown */}
       <Dropdown
         isOpen={isOpen}
         onClose={closeDropdown}
-        className="sm:absolute sm:-left-[300px] xsm:-left-[8vw] -left-[17vw] mt-[16px] flex sm:max-h-[480px] w-[340px]  max-h-[480px] sm:w-[390px] flex-col rounded-2xl bg-background p-3 dark:bg-background lg:right-0 shadow-2xl"
+        className="absolute right-0 mt-4 flex max-h-[480px] w-[340px] sm:w-[390px] flex-col rounded-2xl bg-background p-3 shadow-2xl dark:bg-background"
       >
-        <div className="flex items-center justify-between pb-3 mb-3 border-b border-color dark:border-color">
-          <h5 className="text-lg font-semibold text-foreground dark:text-foreground">
-            Notifications
-          </h5>
-          <div className="flex items-center gap-5">
+        {/* Header */}
+        <div className="flex items-center justify-between pb-2 mb-2 border-b border-color dark:border-color">
+          <h5 className="text-lg font-semibold text-foreground">Notifications</h5>
+          <div className="flex items-center gap-3">
             {notifications.length > 0 && (
               <button
                 onClick={markAllAsRead}
-                className="text-xs text-blue-500 hover:text-blue-600"
+                className="text-[15px] text-blue-500 hover:text-blue-600"
               >
                 Mark all read
               </button>
@@ -251,67 +233,88 @@ const unreadCount = hasOpened ? 0 : notifications.filter((n) => !n.read).length;
             {notifications.length > 0 && (
               <button
                 onClick={clearAll}
-                className="flex items-center gap-1 text-sm text-red-500 hover:text-red-600"
+                className="flex items-center gap-1 text-sm text-red-400 hover:text-red-600"
               >
                 <Trash2 className="w-4 h-4" /> Clear All
               </button>
             )}
             <button
               onClick={toggleDropdown}
-              className="ml-2 text-gray-500 transition dark:text-gray-400 hover:bg-[var(--hover-bg)] dark:hover:bg-[var(--hover-bg)]"
+              className="ml-2 text-gray-500 hover:bg-[var(--hover-bg)] rounded-full p-1"
             >
               <X className="w-5 h-5" />
             </button>
           </div>
         </div>
- 
+
+        {/* Filter buttons */}
+        <div className="flex gap-2 mb-3">
+          <button
+            onClick={() => setFilter("all")}
+            className={`px-3 py-1 rounded-lg text-sm ${
+              filter === "all"
+                ? "bg-blue-500 text-white"
+                : "bg-[var(--hover-bg)] text-foreground"
+            }`}
+          >
+            All
+          </button>
+          <button
+            onClick={() => setFilter("unread")}
+            className={`px-3 py-1 rounded-lg text-sm ${
+              filter === "unread"
+                ? "bg-blue-500 text-white"
+                : "bg-[var(--hover-bg)] text-foreground"
+            }`}
+          >
+            Unread
+          </button>
+        </div>
+
+        {/* Notifications list */}
         <ul className="flex flex-col h-auto overflow-y-auto custom-scrollbar">
-          {notifications.length === 0 ? (
+          {filteredNotifications.length === 0 ? (
             <li className="p-4 text-center text-gray-500 dark:text-gray-400">
-              No notifications yet
+              No notifications
             </li>
           ) : (
-            [...notifications]
-              .sort((a, b) => (a.read === b.read ? 0 : a.read ? 1 : -1)) // 🔥 unread first
-              .map((n) => (
-                <li
-                  key={n.id}
-                  className={`flex items-start justify-between ${
-                    !n.read ? "bg-[var(--unread-bg)] border-l-4 border-orange-400 dark:border-blue-400" : ""
-                  }`}
+            filteredNotifications.map((n) => (
+              <li
+                key={n.id}
+                className={`flex items-start justify-between ${
+                  !n.read ? "bg-[var(--unread-bg)]" : ""
+                }`}
+              >
+                <DropdownItem
+                  onItemClick={() => markAsRead(n.id)}
+                  className="flex flex-1 gap-3 rounded-lg border-b border-[var(--border-all)] p-3 hover:bg-[var(--hover-bg)]"
                 >
-                  <DropdownItem
-                    onItemClick={() => {
-                      markAsRead(n.id);
-                      // closeDropdown();
-                    }}
-                     className="flex flex-1 gap-3 rounded-lg border-b border-[var(--border-all)] p-3 hover:bg-[var(--hover-bg)]"
-                  >
-                    <span className="block">
-                      <span className="block mb-1.5 space-x-1 text-sm">
-                        <span className="font-medium text-[var(--foreground)]">{n.name}</span>
-                        <span className="text-[var(--muted-foreground)]">{n.message}</span>
-                        <span className="font-medium text-[var(--foreground)]">{n.project}</span>
-                      </span>
-                      <span className="flex items-center gap-2 text-xs text-[var(--muted-foreground)]">
-                        <span>{n.type}</span>
-                        <span className="w-1 h-1 bg-[var(--muted-foreground)] rounded-full"></span>
-                        <span>{n.time}</span>
-                      </span>
+                  <span className="block">
+                    <span className="block mb-1.5 space-x-1 text-sm">
+                      <span className="font-medium text-[var(--foreground)]">{n.name}</span>
+                      <span className="text-[var(--muted-foreground)]">{n.message}</span>
+                      <span className="font-medium text-[var(--foreground)]">{n.project}</span>
                     </span>
-                  </DropdownItem>
- 
-                  <button
-                    onClick={() => removeNotification(n.id)}
-                    className="p-2 text-gray-400 hover:text-red-500"
-                  >
-                    <Trash2 className="w-4 h-4" />
-                  </button>
-                </li>
-              ))
+                    <span className="flex items-center gap-2 text-xs text-[var(--muted-foreground)]">
+                      <span>{n.type}</span>
+                      <span className="w-1 h-1 bg-[var(--muted-foreground)] rounded-full"></span>
+                      <span>{n.time}</span>
+                    </span>
+                  </span>
+                </DropdownItem>
+
+                <button
+                  onClick={() => removeNotification(n.id)}
+                  className="p-2 text-gray-400 hover:text-red-500"
+                >
+                  {/* <Trash2 className="w-4 h-4" /> */}
+                </button>
+              </li>
+            ))
           )}
         </ul>
- 
+
+        {/* View all */}
         <Link
           href="/notifications"
           className="block px-4 py-2 mt-3 text-sm font-medium text-center text-foreground bg-background border border-gray-300 rounded-lg hover:bg-[var(--hover-bg)] dark:border-gray-700 dark:bg-background dark:text-foreground dark:hover:bg-[var(--hover-bg)]"
@@ -322,5 +325,7 @@ const unreadCount = hasOpened ? 0 : notifications.filter((n) => !n.read).length;
     </div>
   );
 }
+
+
  
  

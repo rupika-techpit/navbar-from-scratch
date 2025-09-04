@@ -1,6 +1,7 @@
 "use client";
 import React, { useState } from "react";
 import profile from "../../public/profileavatar.png";
+import logo from "../../public/truactlogo.png";
 import Image from "next/image";
 import Link from "next/link";
 import { Search, Bell, Menu, X, Moon, Settings, LogOut } from "lucide-react";
@@ -75,10 +76,16 @@ const Page = () => {
         <div className="flex items-center justify-between px-6 py-3">
           {/* Logo */}
           <Link href="/home" className="flex items-center space-x-2">
-            <div className="h-9 w-9 flex items-center justify-center bg-transparent text-foreground rounded-lg font-bold">
-              Ⓢ
+            <div className="h-10 w-20 flex items-center justify-center bg-transparent text-foreground rounded-lg font-bold">
+              <Image
+                  src={logo}
+                  alt="Profile"
+                  width={100}
+                  height={50}
+                  className=""
+                />
             </div>
-            <span className="text-lg font-semibold">Symbol</span>
+            <span className="font-stretch-90% font-semibold bg-transparent text-foreground w-9">TruAct</span>
           </Link>
 
 
@@ -104,9 +111,9 @@ const Page = () => {
             {/* Theme toggler */}
             <button
               onClick={() => setTheme(theme === "light" ? "dark" : "light")}
-              className="p-2 rounded-lg hover:bg-[var(--hover-bg)] dark:hover:bg-[var(--hover-bg)] transition"
+              className="p-2 rounded-full hover:bg-[var(--hover-bg)] dark:hover:bg-[var(--hover-bg)] transition"
             >
-              <Moon className="h-5 w-5" />
+              <Moon className="h-7 w-7" />
             </button>
 
             {/* Notifications */}
@@ -127,27 +134,28 @@ const Page = () => {
                 <Image
                   src={profile}
                   alt="Profile"
-                  width={36}
-                  height={36}
+                  width={38}
+                  height={38}
                   className="rounded-full border border-gray-300"
                 />
               </button>
 
               {isProfileOpen && (
                 <div
-                  className="absolute right-0 mt-2 w-56 bg-background rounded-xl shadow-lg py-3 z-50"
+                  className="absolute right-0 top-12 mt-2 w-56 bg-background rounded-xl shadow-lg py-1 z-50"
                   style={{ boxShadow: "var(--dropdown-shadow)" }}
                 >
                   {/* Profile Info */}
-                  <div className="px-4 pb-3 border-b border-border-color flex items-center justify-between">
+                  <div className="px-4 pb-1 flex items-center justify-between">
                     {/* Left: Name + Email */}
                     <div>
-                      <p className="text-sm font-medium">Sophia Patel</p>
-                      <p className="text-xs text-gray-500">sophia.patel@email.com</p>
+                      <p className="text-sm font-medium py-1">Sophia Patel</p>
+                      <p className="text-xs text-gray-500 py-1">sophia.patel@email.com</p>
+                      <p className="text-xs text-gray-500 py-1">User ID: S3546</p>
                     </div>
 
                     {/* Right: View button */}
-                    <Link href="/profile" className="p-1 rounded hover:bg-[var(--hover-bg)]">
+                    <Link href="/profile" className="p-2 rounded hover:bg-[var(--hover-bg)]">
                       <svg
                         xmlns="http://www.w3.org/2000/svg"
                         className="h-4 w-4 text-gray-500"
@@ -165,12 +173,14 @@ const Page = () => {
                   <div className="mt-1">
                     <Link
                       href="#"
-                      className="flex items-center gap-2 px-4 py-0 text-sm text-red-500 hover:bg-[var(--hover-bg)] dark:hover:bg-[var(--hover-bg)] rounded-b-xl"
+                      className="flex items-center justify-center gap-2 px-4 py-2 text-sm text-red-400 hover:bg-[var(--hover-bg)] dark:hover:bg-[var(--hover-bg)] border-t rounded-b-md"
+                      style={{ borderTopColor: "var(--border-top)" }}
                     >
                       <LogOut className="w-4 h-4" />
                       Logout
                     </Link>
                   </div>
+
                 </div>
 
               )}
@@ -239,7 +249,7 @@ const Page = () => {
           <div className="relative">
             <button
               onClick={() => setIsSettingsOpen(!isSettingsOpen)}
-              className="p-2 rounded-lg hover:bg-[var(--hover-bg)] dark:hover:bg-[var(--hover-bg)] transition" 
+              className="p-2 rounded-full hover:bg-[var(--hover-bg)] dark:hover:bg-[var(--hover-bg)] transition" 
             >
               <Settings className="h-5 w-5" />
             </button>
