@@ -332,6 +332,40 @@ const Page = () => {
                 {item.name}
               </Link>
             ))}
+            <div className="relative" ref={settingsRef}>
+            <button
+              onClick={() => setIsSettingsOpen(!isSettingsOpen)}
+              className="p-2 rounded-full hover:bg-[var(--hover-bg)] transition"
+            >
+              <Settings className="h-5 w-5" />
+            </button>
+
+            {isSettingsOpen && (
+              <div
+                className="absolute right-0 mt-2 w-48 bg-background rounded-xl py-2 z-50"
+                style={{ boxShadow: "var(--dropdown-shadow)" }}
+              >
+                <Link
+                  href="#"
+                  className="block px-4 py-2 hover:bg-[var(--hover-bg)]"
+                >
+                  Profile
+                </Link>
+                <Link
+                  href="#"
+                  className="block px-4 py-2 hover:bg-[var(--hover-bg)]"
+                >
+                  Settings
+                </Link>
+                <Link
+                  href="#"
+                  className="block px-4 py-2 hover:bg-[var(--hover-bg)]"
+                >
+                  Logout
+                </Link>
+              </div>
+            )}
+          </div>
           </div>
         )}
       </nav>

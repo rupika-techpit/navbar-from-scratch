@@ -4,15 +4,72 @@ import Link from "next/link";
 import { Search } from "lucide-react";
 
 const mockData = [
-  { id: 1, title: "Dashboard Overview", link: "/dashboard" },
-  { id: 2, title: "Marketing Report", link: "/dashboard/subModule" },
-  { id: 3, title: "Sales Analytics", link: "/dashboard/sales" },
-  { id: 4, title: "Operations Security", link: "/report/security" },
-  { id: 5, title: "User Analytics", link: "/analytics/basic" },
-  { id: 6, title: "Enterprise Analytics", link: "/analytics/enterprise" },
-  { id: 7, title: "Case Study 1", link: "/forms/case1" },
-  { id: 8, title: "Team Insights", link: "/analytic/team" },
+  {
+    id: 1,
+    // header: "Dashboard",
+    title: "Dashboard Overview",
+    content: "Quick overview of all key metrics in your workspace.",
+    link: "/dashboard",
+    source: "Internal System",
+  },
+  {
+    id: 2,
+    // header: "Reports",
+    title: "Marketing Report",
+    content: "Detailed analysis of recent campaigns and performance.",
+    link: "/dashboard/subModule",
+    source: "Marketing Dept.",
+  },
+  {
+    id: 3,
+    // header: "Analytics",
+    title: "Sales Analytics",
+    content: "Breakdown of sales performance, revenue trends, and KPIs.",
+    link: "/dashboard/sales",
+    source: "Sales Dashboard",
+  },
+  {
+    id: 4,
+    // header: "Reports",
+    title: "Operations Security",
+    content: "Security and compliance monitoring for operations.",
+    link: "/report/security",
+    source: "Operations Team",
+  },
+  {
+    id: 5,
+    // header: "Analytics",
+    title: "User Analytics",
+    content: "User engagement, activity, and retention data.",
+    link: "/analytics/basic",
+    source: "Analytics Hub",
+  },
+  {
+    id: 6,
+    // header: "Analytics",
+    title: "Enterprise Analytics",
+    content: "Advanced insights for enterprise-level performance.",
+    link: "/analytics/enterprise",
+    source: "Enterprise Data",
+  },
+  {
+    id: 7,
+    // header: "Forms",
+    title: "Case Study 1",
+    content: "Real-world study on workflow efficiency improvements.",
+    link: "/forms/case1",
+    source: "Case Studies",
+  },
+  {
+    id: 8,
+    // header: "Team",
+    title: "Team Insights",
+    content: "Collaboration, productivity, and team activity breakdown.",
+    link: "/analytic/team",
+    source: "HR Analytics",
+  },
 ];
+
 
 const SearchBar = () => {
   const [query, setQuery] = useState("");
@@ -50,12 +107,12 @@ const SearchBar = () => {
           <ul className="max-h-60 overflow-y-auto text-sm">
             {results.length > 0 ? (
               results.map((item) => (
-                <li key={item.id}>
-                  <Link
-                    href={item.link}
-                    className="block px-4 py-2 hover:bg-[var(--hover-bg)] dark:hover:bg-[var(--hover-bg)]"
-                  >
-                    {item.title}
+                <li key={item.id} className="px-4 py-2 hover:bg-[var(--hover-bg)]">
+                  <Link href={item.link}>
+                    {/* <p className="text-xs text-gray-500">{item.header}</p> */}
+                    <p className="font-medium">{item.title}</p>
+                    <p className="text-xs text-[var(--muted-foreground)]">{item.content}</p>
+                    <p className="text-[10px] text-gray-400 mt-1">Source: {item.source}</p>
                   </Link>
                 </li>
               ))
