@@ -30,7 +30,7 @@ const SearchBar = () => {
       <Search className="absolute left-3 top-2.5 h-4 w-4 text-[var(--muted-foreground)]" />
       <input
         type="text"
-        placeholder="Search"
+        placeholder="Global Search"
         value={query}
         onChange={(e) => setQuery(e.target.value)}
         onFocus={() => setIsFocused(true)}

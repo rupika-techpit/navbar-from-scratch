@@ -207,7 +207,10 @@ export default function NotificationDropdown() {
         onClick={toggleDropdown}
       >
         {unreadCount > 0 && (
-          <span className="absolute -top-0.5 right-1 block w-2 h-2 rounded-full bg-orange-400 ring-1 ring-background"></span>
+          <span className="absolute -right-0.5 -top-1 z-10 flex h-3 w-3 items-center justify-center rounded-full bg-orange-400 text-[11px] font-bold text-white">
+            {unreadCount}
+            <span className="absolute inline-flex w-full h-full rounded-full bg-orange-400 opacity-75 animate-ping"></span>
+          </span>
         )}
         <Bell className="h-6 w-6" />
       </button>
@@ -235,7 +238,8 @@ export default function NotificationDropdown() {
                 onClick={clearAll}
                 className="flex items-center gap-1 text-sm text-red-400 hover:text-red-600"
               >
-                <Trash2 className="w-4 h-4" /> Clear All
+                {/* <Trash2 className="w-4 h-4" />  */}
+                Clear All
               </button>
             )}
             <button
@@ -307,7 +311,7 @@ export default function NotificationDropdown() {
                   onClick={() => removeNotification(n.id)}
                   className="p-2 text-gray-400 hover:text-red-500"
                 >
-                  {/* <Trash2 className="w-4 h-4" /> */}
+                  <Trash2 className="w-4 h-4" />
                 </button>
               </li>
             ))
