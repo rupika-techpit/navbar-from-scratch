@@ -219,7 +219,7 @@ export default function NotificationDropdown() {
       <Dropdown
         isOpen={isOpen}
         onClose={closeDropdown}
-        className="absolute right-0 mt-4 flex max-h-[480px] w-[340px] sm:w-[390px] flex-col rounded-2xl bg-background p-3 shadow-2xl dark:bg-background"
+        className="absolute right-0 mt-4 flex max-h-[480px] w-[300px] sm:w-[390px] flex-col rounded-2xl bg-background p-3 shadow-2xl dark:bg-background"
       >
         {/* Header */}
         <div className="flex items-center justify-between pb-2 mb-2 border-b border-color dark:border-color">
