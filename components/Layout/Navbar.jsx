@@ -112,7 +112,10 @@ const Page = () => {
             <div className="h-10 w-20 flex items-center justify-center">
               <Image src={logo} alt="logo" width={100} height={50} />
             </div>
-            <span className="font-semibold">TruAct</span>
+            <span className="font-normal">
+              <span className="block lg:hidden">O.B.A</span> {/* Mobile */}
+              <span className="hidden lg:block"> O.B.A - Our Business Application</span> {/* Desktop */}
+            </span>
           </Link>
 
           {/* Search */}
