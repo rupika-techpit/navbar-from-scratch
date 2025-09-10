@@ -14,6 +14,8 @@ import {
 import { useTheme } from "next-themes";
 import Notifications from "../Header/Notification";
 import SearchBar from "../Header/searchbar";
+import { motion, AnimatePresence } from "framer-motion";
+
 
 const Page = () => {
   const [isProfileOpen, setIsProfileOpen] = useState(false);
@@ -22,6 +24,8 @@ const Page = () => {
   const [active, setActive] = useState("Dashboard");
   const [openDropdown, setOpenDropdown] = useState(null);
   const { theme, setTheme } = useTheme();
+
+  const [openMoreDropdown, setOpenMoreDropdown] = useState(null);
 
   const profileRef = useRef(null);
   const settingsRef = useRef(null);
@@ -49,23 +53,48 @@ const Page = () => {
     setOpenDropdown(openDropdown === name ? null : name);
   };
 
+  const toggleMoreDropdown = (name) => {
+  setOpenMoreDropdown(openMoreDropdown === name ? null : name);
+};
+
+const dropdownVariants = {
+  hidden: { opacity: 0, y: -10, scale: 0.95 },
+  visible: { opacity: 1, y: 0, scale: 1 },
+  exit: { opacity: 0, y: -10, scale: 0.95 },
+};
+
   const navItems = [
     {
       name: "Dashboard",
       path: "/dashboard",
-      subItems: [
-        { name: "Marketing", path: "/dashboard/subModule" },
-        { name: "Sales", path: "/dashboard/sales" },
-        { name: "Operations", path: "/report/security" },
+      headings: [
+        {
+          title: "Team abc abc bac xyz xyz xyz",
+          subItems: [
+            { name: "Marketing", path: "/dashboard/subModule" },
+            { name: "Sales", path: "/dashboard/sales" },
+          ],
+        },
+        {
+          title: "Operations",
+          subItems: [
+            { name: "Security", path: "/report/security" },
+          ],
+        },
       ],
     },
     {
       name: "Reports",
       path: "/report",
-      subItems: [
-        { name: "Analytics", path: "" },
-        { name: "Integration", path: "" },
-        { name: "Security", path: "" },
+      headings: [
+        {
+          title: "System",
+          subItems: [
+            { name: "Analytics", path: "/report/analytics" },
+            { name: "Integration", path: "/report/integration" },
+            { name: "Security", path: "/report/security" },
+          ],
+        },
       ],
     },
     {
@@ -88,13 +117,36 @@ const Page = () => {
     {
       name: "Analytic",
       path: "/analytic",
-      subItems: [
+      headings: [
+        {
+          title: "parts",
+          subItems: [
         { name: "About", path: "/analytic/about" },
         { name: "Team", path: "/analytic/team" },
         { name: "Careers", path: "/analytic/career" },
       ],
+        }
+      ]
+    },
+    {
+      name: "Tech",
+      path: "/tech",
+      headings: [
+        {
+          title: "Knowledge",
+          subItems: [
+        { name: "About", path: "/tech/about" },
+        { name: "Team", path: "/tech/team" },
+        { name: "Careers", path: "/tech/career" },
+      ],
+        }
+      ]
+      
     },
   ];
+
+  const visibleModules = navItems.slice(0, 5);
+  const hiddenModules = navItems.slice(5);
 
   return (
     <div className="bg-background text-foreground">
@@ -163,52 +215,59 @@ const Page = () => {
                 />
               </button>
 
-              {isProfileOpen && (
-                <div
-                  className="absolute right-0 top-12 mt-2 w-56 bg-background rounded-xl shadow-lg py-1 z-50"
-                  style={{ boxShadow: "var(--dropdown-shadow)" }}
-                >
-                  <div className="px-4 pb-1 flex items-center justify-between">
-                    <div>
-                      <p className="text-sm font-medium py-1">Sophia Patel</p>
-                      <p className="text-xs text-gray-500 py-1">
-                        sophia.patel@email.com
-                      </p>
-                      <p className="text-xs text-gray-500 py-1">User ID: S3546</p>
-                    </div>
-                    <Link
-                      href="/profile"
-                      className="p-2 rounded hover:bg-[var(--hover-bg)]"
-                    >
-                      <svg
-                        xmlns="http://www.w3.org/2000/svg"
-                        className="h-4 w-4 text-gray-500"
-                        fill="none"
-                        viewBox="0 0 24 24"
-                        stroke="currentColor"
+              <AnimatePresence>
+                {isProfileOpen && (
+                  <motion.div
+                    initial="hidden"
+                    animate="visible"
+                    exit="exit"
+                    variants={dropdownVariants}
+                    transition={{ duration: 0.2, ease: "easeInOut" }}
+                    className="absolute right-0 top-12 mt-2 w-56 bg-background rounded-xl shadow-lg py-1 z-50"
+                    style={{ boxShadow: "var(--dropdown-shadow)" }}
+                  >
+                    <div className="px-4 pb-1 flex items-center justify-between">
+                      <div>
+                        <p className="text-sm font-medium py-1">Sophia Patel</p>
+                        <p className="text-xs text-gray-500 py-1">
+                          sophia.patel@email.com
+                        </p>
+                        <p className="text-xs text-gray-500 py-1">User ID: S3546</p>
+                      </div>
+                      <Link
+                        href="/profile"
+                        className="p-2 rounded hover:bg-[var(--hover-bg)]"
                       >
-                        <path
-                          strokeLinecap="round"
-                          strokeLinejoin="round"
-                          strokeWidth={2}
-                          d="M9 5l7 7-7 7"
-                        />
-                      </svg>
-                    </Link>
-                  </div>
+                        <svg
+                          xmlns="http://www.w3.org/2000/svg"
+                          className="h-4 w-4 text-gray-500"
+                          fill="none"
+                          viewBox="0 0 24 24"
+                          stroke="currentColor"
+                        >
+                          <path
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                            strokeWidth={2}
+                            d="M9 5l7 7-7 7"
+                          />
+                        </svg>
+                      </Link>
+                    </div>
 
-                  <div className="mt-1">
-                    <Link
-                      href="#"
-                      className="flex items-center justify-center gap-2 px-4 py-2 text-sm text-red-400 hover:bg-[var(--hover-bg)] border-t rounded-b-md"
-                      style={{ borderTopColor: "var(--border-top)" }}
-                    >
-                      <LogOut className="w-4 h-4" />
-                      Logout
-                    </Link>
-                  </div>
-                </div>
-              )}
+                    <div className="mt-1">
+                      <Link
+                        href="#"
+                        className="flex items-center justify-center gap-2 px-4 py-2 text-sm text-red-400 hover:bg-[var(--hover-bg)] border-t rounded-b-md"
+                        style={{ borderTopColor: "var(--border-top)" }}
+                      >
+                        <LogOut className="w-4 h-4" />
+                        Logout
+                      </Link>
+                    </div>
+                  </motion.div>
+                )}
+              </AnimatePresence>
             </div>
           </div>
         </div>
@@ -219,7 +278,8 @@ const Page = () => {
           style={{ borderTopColor: "var(--border-top)" }}
         >
           <div className="flex space-x-8" ref={navRef}>
-            {navItems.map((item) => (
+            {/* First 5 visible modules */}
+            {navItems.slice(0, 4).map((item) => (
               <div key={item.path} className="relative">
                 <button
                   onClick={() => toggleDropdown(item.name)}
@@ -248,31 +308,157 @@ const Page = () => {
                   </svg>
                 </button>
 
-                {openDropdown === item.name && item.subItems && (
-                  <div
-                    className="absolute left-0 mt-2 w-48 rounded-md bg-background z-50"
-                    style={{ boxShadow: "var(--dropdown-shadow)" }}
-                  >
-                    <div className="py-1">
-                      {item.subItems.map((sub) => (
-                        <Link
-                          key={sub.path}
-                          href={sub.path}
-                          onClick={() => {
-                            setActive(item.name);
-                            setOpenDropdown(null);
-                          }}
-                          className="block px-4 py-2 text-sm hover:bg-[var(--hover-bg)]"
-                        >
-                          {sub.name}
-                        </Link>
-                      ))}
-                    </div>
-                  </div>
-                )}
+                {/* Dropdown with Headings + SubItems */}
+                <AnimatePresence>
+                  {openDropdown === item.name && item.headings && (
+                    <motion.div
+                      initial="hidden"
+                      animate="visible"
+                      exit="exit"
+                      variants={dropdownVariants}
+                      transition={{ duration: 0.2, ease: "easeInOut" }}
+                      className="absolute left-0 mt-2 w-56 rounded-md bg-background z-50"
+                      style={{ boxShadow: "var(--dropdown-shadow)" }}
+                    >
+                      <div className="py-2">
+                        {item.headings.map((heading) => (
+                          <div key={heading.title} className="px-4 py-2">
+                            {/* Heading label */}
+                            <p className="truncate overflow-hidden text-ellipsis whitespace-nowrap text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wide mb-1">
+                              {heading.title}
+                            </p>
+
+                            {/* SubItems under heading */}
+                            <div className="space-y-1">
+                              {heading.subItems.map((sub) => (
+                                <Link
+                                  key={sub.path}
+                                  href={sub.path}
+                                  onClick={() => {
+                                    setActive(item.name);
+                                    setOpenDropdown(null);
+                                  }}
+                                  className="block px-2 py-1 text-sm rounded hover:bg-[var(--hover-bg)] truncate"
+                                >
+                                  {sub.name}
+                                </Link>
+                              ))}
+                            </div>
+                          </div>
+                        ))}
+                      </div>
+                    </motion.div>
+                  )}
+                </AnimatePresence>
+
               </div>
             ))}
+
+            {/* === More (...) Button === */}
+            {navItems.length > 4 && (
+            <div className="relative">
+              <button
+                onClick={() => toggleDropdown("more")}
+                className="inline-flex items-center px-3 py-2 text-sm font-medium rounded-md hover:bg-[var(--hover-bg)]"
+              >
+                ...
+              </button>
+
+              {openDropdown === "more" && (
+                <div
+                  className="absolute left-0 mt-2 w-56 rounded-md bg-background z-50"
+                  style={{ boxShadow: "var(--dropdown-shadow)" }}
+                >
+                  <div className="py-2">
+                    {navItems.slice(4).map((item) => (
+                      <div key={item.path} className="px-2 py-1">
+                        {/* === Module button with arrow === */}
+                        <button
+                          onClick={() =>
+                            setOpenMoreDropdown(
+                              openMoreDropdown === item.name ? null : item.name
+                            )
+                          }
+                          className="w-full flex items-center justify-between text-sm font-medium hover:bg-[var(--hover-bg)] px-2 py-1 rounded truncate"
+                        >
+                          {item.name}
+                          <svg
+                            className={`ml-1 h-4 w-4 transition-transform ${
+                              openMoreDropdown === item.name ? "rotate-180" : ""
+                            }`}
+                            xmlns="http://www.w3.org/2000/svg"
+                            fill="none"
+                            viewBox="0 0 24 24"
+                            stroke="currentColor"
+                          >
+                            <path
+                              strokeLinecap="round"
+                              strokeLinejoin="round"
+                              strokeWidth={2}
+                              d="M19 9l-7 7-7-7"
+                            />
+                          </svg>
+                        </button>
+
+                        {/* === Expanded dropdown for this module === */}
+                        {openMoreDropdown === item.name && (
+                          <div className="mt-2 pl-4">
+                            {/* Headings */}
+                            {item.headings &&
+                              item.headings.map((heading) => (
+                                <div key={heading.title} className="mb-2">
+                                  <p className="truncate text-xs font-semibold text-gray-500 uppercase tracking-wide mb-1">
+                                    {heading.title}
+                                  </p>
+                                  <div className="space-y-1">
+                                    {heading.subItems.map((sub) => (
+                                      <Link
+                                        key={sub.path}
+                                        href={sub.path}
+                                        onClick={() => {
+                                          setActive(item.name);
+                                          setOpenDropdown(null);
+                                          setOpenMoreDropdown(null);
+                                        }}
+                                        className="block px-2 py-1 text-sm rounded hover:bg-[var(--hover-bg)] truncate"
+                                      >
+                                        {sub.name}
+                                      </Link>
+                                    ))}
+                                  </div>
+                                </div>
+                              ))}
+
+                            {/* Plain subItems */}
+                            {item.subItems &&
+                              item.subItems.map((sub) => (
+                                <Link
+                                  key={sub.path}
+                                  href={sub.path}
+                                  onClick={() => {
+                                    setActive(item.name);
+                                    setOpenDropdown(null);
+                                    setOpenMoreDropdown(null);
+                                  }}
+                                  className="block px-2 py-1 text-sm rounded hover:bg-[var(--hover-bg)] truncate"
+                                >
+                                  {sub.name}
+                                </Link>
+                              ))}
+                          </div>
+                        )}
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              )}
+            </div>
+          )}
+
+
+
           </div>
+
 
           {/* Settings */}
           <div className="relative" ref={settingsRef}>
@@ -292,19 +478,19 @@ const Page = () => {
                   href="#"
                   className="block px-4 py-2 hover:bg-[var(--hover-bg)]"
                 >
-                  Profile
+                  Support
                 </Link>
                 <Link
                   href="#"
                   className="block px-4 py-2 hover:bg-[var(--hover-bg)]"
                 >
-                  Settings
+                  Account Settings
                 </Link>
                 <Link
                   href="#"
                   className="block px-4 py-2 hover:bg-[var(--hover-bg)]"
                 >
-                  Logout
+                  App Settings
                 </Link>
               </div>
             )}
