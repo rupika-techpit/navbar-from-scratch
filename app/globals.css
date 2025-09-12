@@ -59,7 +59,7 @@ body {
 /* Keyframes for hover scroll */
 @keyframes scroll-text {
   0%, 10%{ transform: translateX(0); }
-  100% { transform: translateX(-100%); }
+  90%, 100% { transform: translateX(-100%); }
 }
 
 /* Apply scrolling on hover */
@@ -68,7 +68,7 @@ body {
   animation: scroll-text 4s linear infinite;
 }
 
-@keyframes scroll-text {
+/* @keyframes scroll-text {
   0%, 10% { transform: translateX(0); }
   90%, 100% { transform: translateX(-100%); }
 }
@@ -77,4 +77,4 @@ body {
   display: inline-block;
   animation: scroll-text 8s linear infinite;
   white-space: nowrap;
-}
+} */

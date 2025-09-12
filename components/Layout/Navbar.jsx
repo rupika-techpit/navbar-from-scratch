@@ -567,83 +567,101 @@ const dropdownVariants = {
                   ...
                 </button>
 
-                {openDropdown === "more" && (
-                  <div
-                    className="absolute -right-2 mt-2 w-56 rounded-md bg-background z-50"
-                    style={{ boxShadow: "var(--dropdown-shadow)" }}
-                  >
-                    <div className="py-2">
-                      {navItems.slice(visibleCount).map((item) => (
-                        <div key={item.path} className="px-2 py-1">
-                          {/* Module button with arrow */}
-                          <button
-                            onClick={() => toggleMoreDropdown(item.name)}
-                            className="w-full flex items-center justify-between text-sm font-medium hover:bg-[var(--hover-bg)] px-2 py-1 rounded truncate"
-                          >
-                            {item.name}
-                            <svg
-                              className={`ml-1 h-4 w-4 transition-transform ${
-                                openMoreDropdown === item.name ? "rotate-180" : ""
-                              }`}
-                              xmlns="http://www.w3.org/2000/svg"
-                              fill="none"
-                              viewBox="0 0 24 24"
-                              stroke="currentColor"
+                <AnimatePresence>
+                  {openDropdown === "more" && (
+                    <motion.div
+                      initial="hidden"
+                      animate="visible"
+                      exit="exit"
+                      variants={dropdownVariants}
+                      transition={{ duration: 0.2, ease: "easeInOut" }}
+                      className="absolute -right-2 mt-2 w-56 rounded-md bg-background z-50"
+                      style={{ boxShadow: "var(--dropdown-shadow)" }}
+                    >
+                      <div className="py-2 max-h-[calc(100vh-200px)] overflow-y-auto">
+                        {navItems.slice(visibleCount).map((item) => (
+                          <div key={item.path} className="px-2 py-1">
+                            {/* Module button with arrow */}
+                            <button
+                              onClick={() => toggleMoreDropdown(item.name)}
+                              className="w-full flex items-center justify-between text-sm font-medium hover:bg-[var(--hover-bg)] px-2 py-1 rounded truncate"
                             >
-                              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
-                            </svg>
-                          </button>
+                              {/* Wrapper for scrolling */}
+                              <div className="overflow-hidden">
+                                <span className="inline-block whitespace-nowrap hover:animate-scroll">
+                                  {item.name}
+                                </span>
+                              </div>
+                              <svg
+                                className={`ml-1 h-4 w-4 transition-transform ${
+                                  openMoreDropdown === item.name ? "rotate-180" : ""
+                                }`}
+                                xmlns="http://www.w3.org/2000/svg"
+                                fill="none"
+                                viewBox="0 0 24 24"
+                                stroke="currentColor"
+                              >
+                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+                              </svg>
+                            </button>
 
-                          {/* Expanded dropdown for this module */}
-                          {openMoreDropdown === item.name && (
-                            <div className="mt-2 pl-4">
-                              {item.headings &&
-                                item.headings.map((heading) => (
-                                  <div key={heading.title} className="mb-2">
-                                    <p className="text-xs font-semibold text-gray-500 uppercase mb-1">
-                                      {heading.icon && <heading.icon className="h-4 w-4 mr-2" />}
-                                      {heading.title}
-                                    </p>
-                                    <div className="space-y-1">
-                                      {heading.subItems.map((sub) => (
-                                        <Link
-                                          key={sub.path}
-                                          href={sub.path}
-                                          onClick={() => {
-                                            setActive(item.name);
-                                            setOpenDropdown(null);
-                                            setOpenMoreDropdown(null);
-                                          }}
-                                          className="block px-2 py-1 text-sm rounded hover:bg-[var(--hover-bg)] truncate"
-                                        >
-                                          {sub.name}
-                                        </Link>
-                                      ))}
-                                    </div>
-                                  </div>
-                                ))}
-                              {item.subItems &&
-                                item.subItems.map((sub) => (
-                                  <Link
-                                    key={sub.path}
-                                    href={sub.path}
-                                    onClick={() => {
-                                      setActive(item.name);
-                                      setOpenDropdown(null);
-                                      setOpenMoreDropdown(null);
-                                    }}
-                                    className="block px-2 py-1 text-sm rounded hover:bg-[var(--hover-bg)] truncate"
-                                  >
-                                    {sub.name}
-                                  </Link>
-                                ))}
-                            </div>
-                          )}
-                        </div>
-                      ))}
-                    </div>
-                  </div>
+                            {/* Expanded dropdown for this module */}
+                            <AnimatePresence>
+                              {openMoreDropdown === item.name && (
+                                <motion.div 
+                                initial={{ height: 0, opacity: 0 }}
+                                animate={{ height: "auto", opacity: 1 }}
+                                exit={{ height: 0, opacity: 0 }}
+                                transition={{ duration: 0.3, ease: "easeInOut" }}
+                                className="mt-2 pl-4 overflow-hidden">
+                                  {item.headings &&
+                                    item.headings.map((heading) => (
+                                      <div key={heading.title} className="mb-2">
+                                        <p className="text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase mb-1 whitespace-break-spaces">
+                                          {heading.title}
+                                        </p>
+                                        <div className="space-y-1">
+                                          {heading.subItems.map((sub) => (
+                                            <Link
+                                              key={sub.path}
+                                              href={sub.path}
+                                              onClick={() => {
+                                                setActive(item.name);
+                                                setOpenDropdown(null);
+                                                setOpenMoreDropdown(null);
+                                              }}
+                                              className="block px-2 py-1 text-sm rounded hover:bg-[var(--hover-bg)] truncate"
+                                            >
+                                              {sub.name}
+                                            </Link>
+                                          ))}
+                                        </div>
+                                      </div>
+                                    ))}
+                                  {item.subItems &&
+                                    item.subItems.map((sub) => (
+                                      <Link
+                                        key={sub.path}
+                                        href={sub.path}
+                                        onClick={() => {
+                                          setActive(item.name);
+                                          setOpenDropdown(null);
+                                          setOpenMoreDropdown(null);
+                                        }}
+                                        className="block px-2 py-1 text-sm rounded hover:bg-[var(--hover-bg)] truncate"
+                                      >
+                                        <span className="inline-block hover:animate-scroll">{sub.name}</span>
+                                      </Link>
+                                    ))}
+                                </motion.div>
+                              )}
+                            </AnimatePresence>
+                          </div>
+                        ))}
+                      </div>
+                    </motion.div>
                 )}
+                </AnimatePresence>
               </div>
             )}
           </div>
@@ -657,38 +675,45 @@ const dropdownVariants = {
               <Settings className="h-5 w-5" />
             </button>
 
-            {isSettingsOpen && (
-              <div
-                className="absolute right-0 mt-2 w-48 bg-background rounded-xl py-2 z-50"
-                style={{ boxShadow: "var(--dropdown-shadow)" }}
-              >
-                <Link
-                  href="#"
-                  className="block px-4 py-2 hover:bg-[var(--hover-bg)]"
+            <AnimatePresence>
+              {isSettingsOpen && (
+                <motion.div
+                  initial="hidden"
+                  animate="visible"
+                  exit="exit"
+                  variants={dropdownVariants}
+                  transition={{ duration: 0.2, ease: "easeInOut" }}
+                  className="absolute right-0 mt-2 w-48 bg-background rounded-xl py-2 z-50"
+                  style={{ boxShadow: "var(--dropdown-shadow)" }}
                 >
-                  Support
-                </Link>
-                <Link
-                  href="#"
-                  className="block px-4 py-2 hover:bg-[var(--hover-bg)]"
-                >
-                  Account Settings
-                </Link>
-                <Link
-                  href="#"
-                  className="block px-4 py-2 hover:bg-[var(--hover-bg)]"
-                >
-                  App Settings
-                </Link>
-              </div>
-            )}
+                  <Link
+                    href="#"
+                    className="block px-4 py-2 hover:bg-[var(--hover-bg)]"
+                  >
+                    Support
+                  </Link>
+                  <Link
+                    href="#"
+                    className="block px-4 py-2 hover:bg-[var(--hover-bg)]"
+                  >
+                    Account Settings
+                  </Link>
+                  <Link
+                    href="#"
+                    className="block px-4 py-2 hover:bg-[var(--hover-bg)]"
+                  >
+                    App Settings
+                  </Link>
+                </motion.div>
+              )}
+            </AnimatePresence>
           </div>
         </div>
         
         {/* === Mobile Menu === */}
         {isMobileMenuOpen && (
           <div
-            className="md:hidden bg-background px-6 py-4 space-y-4 text-sm font-medium"
+            className="md:hidden bg-background px-6 py-4 space-y-4 text-sm font-medium max-h-[calc(100vh-200px)] overflow-y-auto"
             style={{ borderTopColor: "var(--border-top)" }}
           >
             {/* Search */}
