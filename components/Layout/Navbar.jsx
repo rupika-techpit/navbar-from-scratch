@@ -86,7 +86,7 @@ const dropdownVariants = {
 
   const navItems = [
     {
-      name: "Dashboard-Dashboard-Dashboard-Dashboard-Dashboard-",
+      name: "Dashboard-Dashboard-Dashboard-Dashboard-Dashboard",
       path: "/dashboard",
       headings: [
         {
@@ -106,7 +106,7 @@ const dropdownVariants = {
       ],
     },
     {
-      name: "Reports",
+      name: "Reports-Reports-Reports-Reports",
       path: "/report",
       headings: [
         {
@@ -121,7 +121,7 @@ const dropdownVariants = {
       ],
     },
     {
-      name: "Analytics",
+      name: "Analytics-Analytics-Analytics-Analytics",
       path: "/analytics",
       subItems: [
         { name: "Basic", path: "/analytics/basic" },
@@ -130,7 +130,7 @@ const dropdownVariants = {
       ],
     },
     {
-      name: "Forms",
+      name: "Forms-Forms-Forms-Forms",
       path: "/forms",
       subItems: [
         { name: "Case Study 1", path: "/forms/case1" },
@@ -138,7 +138,7 @@ const dropdownVariants = {
       ],
     },
     {
-      name: "Analytic",
+      name: "Analytic-Analytic-Analytic-Analytic",
       path: "/analytic",
       headings: [
         {
@@ -487,14 +487,14 @@ const dropdownVariants = {
               <div key={item.path} className="relative">
                 <button
                   onClick={() => toggleDropdown(item.name)}
-                  className={`inline-flex items-center px-3 py-2 text-sm font-medium rounded-md ${
+                  className={`inline-flex items-center px-3 py-2 text-sm font-medium rounded-md max-w-[120px] ${
                     active === item.name
                       ? "bg-[var(--hover-bg)]"
                       : "hover:bg-[var(--hover-bg)]"
                   }`}
                 >
                   {/* Wrapper for scrolling */}
-                  <div className="overflow-hidden max-w-[120px]">
+                  <div className="overflow-hidden max-w-[60px]">
                     <span className="inline-block whitespace-nowrap hover:animate-scroll">
                       {item.name}
                     </span>
@@ -502,7 +502,7 @@ const dropdownVariants = {
 
                   {/* Dropdown arrow */}
                   <svg
-                    className={`ml-1 h-4 w-4 transition-transform ${
+                    className={`ml-1 h-5 w-5 transition-transform ${
                       openDropdown === item.name ? "rotate-180" : ""
                     }`}
                     xmlns="http://www.w3.org/2000/svg"
@@ -569,7 +569,7 @@ const dropdownVariants = {
 
                 {openDropdown === "more" && (
                   <div
-                    className="absolute left-0 mt-2 w-56 rounded-md bg-background z-50"
+                    className="absolute -right-2 mt-2 w-56 rounded-md bg-background z-50"
                     style={{ boxShadow: "var(--dropdown-shadow)" }}
                   >
                     <div className="py-2">
@@ -601,6 +601,7 @@ const dropdownVariants = {
                                 item.headings.map((heading) => (
                                   <div key={heading.title} className="mb-2">
                                     <p className="text-xs font-semibold text-gray-500 uppercase mb-1">
+                                      {heading.icon && <heading.icon className="h-4 w-4 mr-2" />}
                                       {heading.title}
                                     </p>
                                     <div className="space-y-1">
@@ -694,6 +695,7 @@ const dropdownVariants = {
             <SearchBar />
 
             {/* Mobile Modules */}
+            {/* Mobile Modules */}
             {navItems.map((item) => (
               <div key={item.path} className="space-y-1">
                 {/* Module button */}
@@ -703,11 +705,17 @@ const dropdownVariants = {
                       openMobileDropdown === item.name ? null : item.name
                     )
                   }
-                  className="flex justify-between w-full text-left px-3 py-2 rounded-md hover:bg-[var(--hover-bg)] items-center"
+                  className="flex justify-between w-full text-left px-3 py-2 rounded-md hover:bg-[var(--hover-bg)] items-center max-w-[300px]"
                 >
-                  <span className="whitespace-nowrap overflow-hidden text-ellipsis hover:animate-scroll">
-                    {item.name}
-                  </span>
+                  <div className="overflow-hidden max-w-[230px]">
+                    <span
+                      className={`inline-block whitespace-nowrap ${
+                        item.name.length > 42 ? "auto-scroll" : ""
+                      }`}
+                    >
+                      {item.name}
+                    </span>
+                  </div>
                   {item.headings || item.subItems ? (
                     <svg
                       className={`ml-2 h-4 w-4 transition-transform ${
@@ -733,31 +741,34 @@ const dropdownVariants = {
                   <div className="pl-4 space-y-2">
                     {/* Headings + subItems */}
                     {item.headings &&
-                    item.headings.map((heading) => (
-                      <div key={heading.title} className="space-y-1">
-                        <p className="text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase mb-1 whitespace-break-spaces">
-                          {heading.title}
-                        </p>
-                        <div className="space-y-1">
-                          {heading.subItems.map((sub) => (
-                            <Link
-                              key={sub.path}
-                              href={sub.path}
-                              onClick={() => {
-                                setActive(item.name);
-                                setIsMobileMenuOpen(false);
-                              }}
-                              className="block px-2 py-1 rounded hover:bg-[var(--hover-bg)] overflow-hidden"
-                            >
-                              <span className="inline-block whitespace-nowrap hover:animate-scroll">
-                                {sub.name}
-                              </span>
-                            </Link>
-                          ))}
+                      item.headings.map((heading) => (
+                        <div key={heading.title} className="space-y-1">
+                          <p className="text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase mb-1 whitespace-break-spaces max-w-[300px]">
+                            {heading.title}
+                          </p>
+                          <div className="space-y-1 max-w-[300px]">
+                            {heading.subItems.map((sub) => (
+                              <Link
+                                key={sub.path}
+                                href={sub.path}
+                                onClick={() => {
+                                  setActive(item.name);
+                                  setIsMobileMenuOpen(false);
+                                }}
+                                className="block px-2 py-1 rounded hover:bg-[var(--hover-bg)] overflow-hidden"
+                              >
+                                <span
+                                  className={`inline-block max-w-full whitespace-nowrap overflow-hidden ${
+                                    sub.name.length > 35 ? "auto-scroll" : ""
+                                  }`}
+                                >
+                                  {sub.name}
+                                </span>
+                              </Link>
+                            ))}
+                          </div>
                         </div>
-                      </div>
-                    ))}
-
+                      ))}
 
                     {/* SubItems without heading */}
                     {item.subItems &&
@@ -769,15 +780,22 @@ const dropdownVariants = {
                             setActive(item.name);
                             setIsMobileMenuOpen(false);
                           }}
-                          className="block px-2 py-1 text-sm rounded hover:bg-[var(--hover-bg)] truncate"
+                          className="block px-2 py-1 text-sm rounded hover:bg-[var(--hover-bg)] overflow-hidden"
                         >
-                          {sub.name}
+                          <span
+                            className={`inline-block max-w-[160px] whitespace-nowrap overflow-hidden ${
+                              sub.name.length > 12 ? "auto-scroll" : ""
+                            }`}
+                          >
+                            {sub.name}
+                          </span>
                         </Link>
                       ))}
                   </div>
                 )}
               </div>
             ))}
+
 
             {/* Mobile Settings */}
             <div className="relative" ref={settingsRef}>

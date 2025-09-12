@@ -67,3 +67,14 @@ body {
   display: inline-block;
   animation: scroll-text 4s linear infinite;
 }
+
+@keyframes scroll-text {
+  0%, 10% { transform: translateX(0); }
+  90%, 100% { transform: translateX(-100%); }
+}
+
+.auto-scroll {
+  display: inline-block;
+  animation: scroll-text 8s linear infinite;
+  white-space: nowrap;
+}
