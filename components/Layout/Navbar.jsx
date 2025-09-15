@@ -501,7 +501,7 @@ const Page = () => {
                 >
                   {/* Wrapper for scrolling */}
                   <div className="overflow-hidden max-w-[60px]">
-                    <span className="inline-block whitespace-nowrap hover:animate-scroll">
+                    <span className={`inline-block whitespace-nowrap ${item.name.length > 7 ? "hover:animate-scroll":""}`}>
                       {item.name}
                     </span>
                   </div>
@@ -556,7 +556,7 @@ const Page = () => {
                                   )}
                                   {/* Text wrapper (important) */}
                                   <div className="relative overflow-hidden flex-1">
-                                    <span className="inline-block whitespace-nowrap hover:animate-scroll">
+                                    <span className={`inline-block whitespace-nowrap ${item.name.length > 23 ? "hover:animate-scroll":""}`}>
                                       {sub.name}
                                     </span>
                                   </div>
@@ -742,7 +742,6 @@ const Page = () => {
             <SearchBar />
 
             {/* Mobile Modules */}
-            {/* Mobile Modules */}
             {navItems.map((item) => (
               <div key={item.path} className="space-y-1">
                 {/* Module button */}
@@ -790,9 +789,10 @@ const Page = () => {
                     {item.headings &&
                       item.headings.map((heading) => (
                         <div key={heading.title} className="space-y-1">
-                          <p className="text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase mb-1 whitespace-break-spaces max-w-[300px]">
-                            {heading.title}
-                          </p>
+                          <p className="flex items-center text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase mb-1 whitespace-break-spaces max-w-[300px]">
+                              <span>{heading.icon && <heading.icon className="h-4 w-4 mr-2" />}</span>
+                              {heading.title}
+                            </p>
                           <div className="space-y-1 max-w-[300px]">
                             {heading.subItems.map((sub) => (
                               <Link
@@ -802,15 +802,19 @@ const Page = () => {
                                   setActive(item.name);
                                   setIsMobileMenuOpen(false);
                                 }}
-                                className="block px-2 py-1 rounded hover:bg-[var(--hover-bg)] overflow-hidden"
+                                className="flex items-center px-2 py-1 rounded hover:bg-[var(--hover-bg)] overflow-hidden"
                               >
-                                <span
-                                  className={`inline-block max-w-full whitespace-nowrap overflow-hidden ${
+                                {sub.icon && (
+                                    <sub.icon className="h-4 w-4 mr-2 shrink-0 z-50" />
+                                  )}
+                                <div className="relative overflow-hidden flex-1">
+                                  <span className={`inline-block max-w-full whitespace-nowrap ${
                                     sub.name.length > 35 ? "auto-scroll" : ""
                                   }`}
-                                >
-                                  {sub.name}
-                                </span>
+                                  >
+                                    {sub.name}
+                                  </span>
+                                </div>
                               </Link>
                             ))}
                           </div>
