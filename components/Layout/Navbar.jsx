@@ -10,7 +10,12 @@ import {
   Moon,
   Settings,
   LogOut,
-  Book, Code, Database, FileText
+  Book, Code, Database, FileText,
+  icons,
+  SquareChartGantt,
+  ShieldUser,
+  BadgeAlert,
+  Cable
 } from "lucide-react";
 import { useTheme } from "next-themes";
 import Notifications from "../Header/Notification";
@@ -55,39 +60,40 @@ const Page = () => {
 
   // Responsive visible count
   useEffect(() => {
-  if (!navRef.current) return;
+    if (!navRef.current) return;
 
-  const observer = new ResizeObserver(() => {
-    const containerWidth = navRef.current?.offsetWidth || 0;
+    const observer = new ResizeObserver(() => {
+      const containerWidth = navRef.current?.offsetWidth || 0;
 
-    // estimate avg width per item (adjust if your design needs)
-    const itemWidth = 120;
-    const maxVisible = Math.floor(containerWidth / itemWidth) - 1; // leave space for "..."
-    setVisibleCount(Math.max(1, Math.min(maxVisible, navItems.length)));
-  });
+      // estimate avg width per item (adjust if your design needs)
+      const itemWidth = 120;
+      const maxVisible = Math.floor(containerWidth / itemWidth) - 1; // leave space for "..."
+      setVisibleCount(Math.max(1, Math.min(maxVisible, navItems.length)));
+    });
 
-  observer.observe(navRef.current);
-  return () => observer.disconnect();
-}, []);
+    observer.observe(navRef.current);
+    return () => observer.disconnect();
+  }, []);
 
   const toggleDropdown = (name) => {
     setOpenDropdown(openDropdown === name ? null : name);
   };
 
   const toggleMoreDropdown = (name) => {
-  setOpenMoreDropdown(openMoreDropdown === name ? null : name);
-};
+     setOpenMoreDropdown(openMoreDropdown === name ? null : name);
+  };
 
-const dropdownVariants = {
-  hidden: { opacity: 0, y: -10, scale: 0.95 },
-  visible: { opacity: 1, y: 0, scale: 1 },
-  exit: { opacity: 0, y: -10, scale: 0.95 },
-};
+  const dropdownVariants = {
+    hidden: { opacity: 0, y: -10, scale: 0.95 },
+    visible: { opacity: 1, y: 0, scale: 1 },
+    exit: { opacity: 0, y: -10, scale: 0.95 },
+  };
 
   const navItems = [
     {
       name: "Dashboard-Dashboard-Dashboard-Dashboard-Dashboard",
       path: "/dashboard",
+      icon: SquareChartGantt,
       headings: [
         {
           title: "Team- Many options to handle the dashboard pages",
@@ -529,22 +535,33 @@ const dropdownVariants = {
                       <div className="py-2">
                         {item.headings.map((heading) => (
                           <div key={heading.title} className="px-4 py-2">
-                            <p className="text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase mb-1 whitespace-break-spaces">
+                            <p className="flex items-center text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase mb-1 whitespace-break-spaces">
+                              <span>{heading.icon && <heading.icon className="h-4 w-4 mr-2" />}</span>
                               {heading.title}
                             </p>
                             <div className="space-y-1">
                               {heading.subItems.map((sub) => (
                                 <div className="relative w-full" key={sub.path}>
                                   <Link
-                                    href={sub.path}
-                                    onClick={() => {
-                                      setActive(item.name);
-                                      setOpenDropdown(null);
-                                    }}
-                                    className="block px-2 py-1 text-sm rounded hover:bg-[var(--hover-bg)] truncate overflow-hidden whitespace-nowrap"
-                                  >
-                                    <span className="inline-block hover:animate-scroll">{sub.name}</span>
-                                  </Link>
+                                  key={sub.path}
+                                  href={sub.path}
+                                  onClick={() => {
+                                    setActive(item.name);
+                                    setOpenDropdown(null);
+                                  }}
+                                  className="flex items-center px-2 py-1 text-sm rounded hover:bg-[var(--hover-bg)]"
+                                >
+                                  {sub.icon && (
+                                    <sub.icon className="h-4 w-4 mr-2 shrink-0 z-50" />
+                                  )}
+                                  {/* Text wrapper (important) */}
+                                  <div className="relative overflow-hidden flex-1">
+                                    <span className="inline-block whitespace-nowrap hover:animate-scroll">
+                                      {sub.name}
+                                    </span>
+                                  </div>
+                                </Link>
+
                                 </div>
                               ))}
                             </div>
@@ -688,21 +705,26 @@ const dropdownVariants = {
                 >
                   <Link
                     href="#"
-                    className="block px-4 py-2 hover:bg-[var(--hover-bg)]"
+                    className="flex items-center gap-2 px-4 py-2 hover:bg-[var(--hover-bg)]"
                   >
-                    Support
+                    
+                    <Cable className="h-4 w-4 shrink-0" />
+                    <span>Support</span>
                   </Link>
                   <Link
                     href="#"
-                    className="block px-4 py-2 hover:bg-[var(--hover-bg)]"
+                    className="flex items-center gap-2 px-4 py-2 hover:bg-[var(--hover-bg)]"
                   >
-                    Account Settings
+                    <ShieldUser className="h-4 w-4 shrink-0" />
+                    <span>Account Settings</span>
                   </Link>
                   <Link
                     href="#"
-                    className="block px-4 py-2 hover:bg-[var(--hover-bg)]"
+                    className="flex items-center gap-2 px-4 py-2 hover:bg-[var(--hover-bg)]"
                   >
-                    App Settings
+                    
+                    <BadgeAlert className="h-4 w-4 shrink-0" />
+                    <span>App Settings</span>
                   </Link>
                 </motion.div>
               )}
