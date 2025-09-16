@@ -15,7 +15,9 @@ import {
   SquareChartGantt,
   ShieldUser,
   BadgeAlert,
-  Cable
+  Cable,
+  BookUser,
+  ShieldHalf
 } from "lucide-react";
 import { useTheme } from "next-themes";
 import Notifications from "../Header/Notification";
@@ -100,7 +102,7 @@ const Page = () => {
           icon: Book,
           subItems: [
             { name: "Marketing-abc abc abc bac bac abc abc abc", path: "/dashboard/subModule", icon: FileText },
-            { name: "Sales", path: "/dashboard/sales", icon: Code },
+            { name: "Sales", path: "/dashboard/sales", icon: BookUser },
           ],
         },
         {
@@ -116,7 +118,7 @@ const Page = () => {
       path: "/report",
       headings: [
         {
-          title: "System",
+          title: "System Analytics and Integration",
           icon: Database,
           subItems: [
             { name: "Analytics", path: "/report/analytics" },
@@ -129,19 +131,10 @@ const Page = () => {
     {
       name: "Analytics-Analytics-Analytics-Analytics",
       path: "/analytics",
-      subItems: [
-        { name: "Basic", path: "/analytics/basic" },
-        { name: "Pro", path: "/analytics/pro" },
-        { name: "Enterprise", path: "/analytics/enterprise" },
-      ],
     },
     {
-      name: "Forms-Forms-Forms-Forms",
+      name: "Forms",
       path: "/forms",
-      subItems: [
-        { name: "Case Study 1", path: "/forms/case1" },
-        { name: "Case Study 2", path: "/forms/case2" },
-      ],
     },
     {
       name: "Analytic-Analytic-Analytic-Analytic",
@@ -178,11 +171,69 @@ const Page = () => {
       path: "/report",
       headings: [
         {
-          title: "System",
+          title: "System Analytics and Integration",
+          icon: Database,
           subItems: [
-            { name: "Analytics", path: "/report/analytics" },
-            { name: "Integration", path: "/report/integration" },
-            { name: "Security", path: "/report/security" },
+            { name: "Analytics", path: "/report/analytics", icon: BookUser},
+            { name: "Integration", path: "/report/integration", icon: FileText },
+            { name: "Security", path: "/report/security", icon: ShieldHalf },
+          ],
+        },
+      ],
+    },
+    {
+      name: "Analytics",
+      path: "/analytics",
+      subItems: [
+        { name: "Basic", path: "/analytics/basic" },
+        { name: "Pro", path: "/analytics/pro" },
+        { name: "Enterprise", path: "/analytics/enterprise" },
+      ],
+    },
+    {
+      name: "Forms",
+      path: "/forms",
+    },
+    {
+      name: "Analytic",
+      path: "/analytic",
+      headings: [
+        {
+          title: "parts",
+          subItems: [
+        { name: "About", path: "/analytic/about" },
+        { name: "Team", path: "/analytic/team" },
+        { name: "Careers", path: "/analytic/career" },
+      ],
+        }
+      ]
+    },
+    {
+      name: "Tech",
+      path: "/tech",
+      headings: [
+        {
+          title: "Knowledge",
+          subItems: [
+        { name: "About", path: "/tech/about" },
+        { name: "Team", path: "/tech/team" },
+        { name: "Careers", path: "/tech/career" },
+      ],
+        }
+      ]
+      
+    },
+    {
+      name: "Reports",
+      path: "/report",
+      headings: [
+        {
+          title: "System Analytics and Integration",
+          icon: Database,
+          subItems: [
+            { name: "Analytics", path: "/report/analytics", icon: BookUser},
+            { name: "Integration", path: "/report/integration", icon: FileText },
+            { name: "Security", path: "/report/security", icon: ShieldHalf },
           ],
         },
       ],
@@ -238,71 +289,12 @@ const Page = () => {
       path: "/report",
       headings: [
         {
-          title: "System",
+          title: "System Analytics and Integration",
+          icon: Database,
           subItems: [
-            { name: "Analytics", path: "/report/analytics" },
-            { name: "Integration", path: "/report/integration" },
-            { name: "Security", path: "/report/security" },
-          ],
-        },
-      ],
-    },
-    {
-      name: "Analytics",
-      path: "/analytics",
-      subItems: [
-        { name: "Basic", path: "/analytics/basic" },
-        { name: "Pro", path: "/analytics/pro" },
-        { name: "Enterprise", path: "/analytics/enterprise" },
-      ],
-    },
-    {
-      name: "Forms",
-      path: "/forms",
-      subItems: [
-        { name: "Case Study 1", path: "/forms/case1" },
-        { name: "Case Study 2", path: "/forms/case2" },
-      ],
-    },
-    {
-      name: "Analytic",
-      path: "/analytic",
-      headings: [
-        {
-          title: "parts",
-          subItems: [
-        { name: "About", path: "/analytic/about" },
-        { name: "Team", path: "/analytic/team" },
-        { name: "Careers", path: "/analytic/career" },
-      ],
-        }
-      ]
-    },
-    {
-      name: "Tech",
-      path: "/tech",
-      headings: [
-        {
-          title: "Knowledge",
-          subItems: [
-        { name: "About", path: "/tech/about" },
-        { name: "Team", path: "/tech/team" },
-        { name: "Careers", path: "/tech/career" },
-      ],
-        }
-      ]
-      
-    },
-    {
-      name: "Reports",
-      path: "/report",
-      headings: [
-        {
-          title: "System",
-          subItems: [
-            { name: "Analytics", path: "/report/analytics" },
-            { name: "Integration", path: "/report/integration" },
-            { name: "Security", path: "/report/security" },
+            { name: "Analytics", path: "/report/analytics", icon: BookUser},
+            { name: "Integration", path: "/report/integration", icon: FileText },
+            { name: "Security", path: "/report/security", icon: ShieldHalf },
           ],
         },
       ],
@@ -491,89 +483,133 @@ const Page = () => {
             {/* visible modules */}
             {navItems.slice(0, visibleCount).map((item) => (
               <div key={item.path} className="relative">
-                <button
-                  onClick={() => toggleDropdown(item.name)}
-                  className={`inline-flex items-center px-3 py-2 text-sm font-medium rounded-md max-w-[120px] ${
-                    active === item.name
-                      ? "bg-[var(--hover-bg)]"
-                      : "hover:bg-[var(--hover-bg)]"
-                  }`}
-                >
-                  {/* Wrapper for scrolling */}
-                  <div className="overflow-hidden max-w-[60px]">
-                    <span className={`inline-block whitespace-nowrap ${item.name.length > 7 ? "hover:animate-scroll":""}`}>
-                      {item.name}
-                    </span>
-                  </div>
-
-                  {/* Dropdown arrow */}
-                  <svg
-                    className={`ml-1 h-5 w-5 transition-transform ${
-                      openDropdown === item.name ? "rotate-180" : ""
-                    }`}
-                    xmlns="http://www.w3.org/2000/svg"
-                    fill="none"
-                    viewBox="0 0 24 24"
-                    stroke="currentColor"
-                  >
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
-                  </svg>
-                </button>
-
-                {/* Dropdown with Headings + SubItems */}
-                <AnimatePresence>
-                  {openDropdown === item.name && item.headings && (
-                    <motion.div
-                      initial="hidden"
-                      animate="visible"
-                      exit="exit"
-                      variants={dropdownVariants}
-                      transition={{ duration: 0.2, ease: "easeInOut" }}
-                      className="absolute left-0 mt-2 w-56 rounded-md bg-background z-50"
-                      style={{ boxShadow: "var(--dropdown-shadow)" }}
+                {item.headings || item.subItems ? (
+                  // === Module with dropdown ===
+                  <>
+                    <button
+                      onClick={() => toggleDropdown(item.name)}
+                      className={`inline-flex items-center px-3 py-2 text-sm font-medium rounded-md max-w-[120px] ${
+                        active === item.name
+                          ? "bg-[var(--hover-bg)]"
+                          : "hover:bg-[var(--hover-bg)]"
+                      }`}
                     >
-                      <div className="py-2">
-                        {item.headings.map((heading) => (
-                          <div key={heading.title} className="px-4 py-2">
-                            <p className="flex items-center text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase mb-1 whitespace-break-spaces">
-                              <span>{heading.icon && <heading.icon className="h-4 w-4 mr-2" />}</span>
-                              {heading.title}
-                            </p>
-                            <div className="space-y-1">
-                              {heading.subItems.map((sub) => (
-                                <div className="relative w-full" key={sub.path}>
-                                  <Link
-                                  key={sub.path}
-                                  href={sub.path}
-                                  onClick={() => {
-                                    setActive(item.name);
-                                    setOpenDropdown(null);
-                                  }}
-                                  className="flex items-center px-2 py-1 text-sm rounded hover:bg-[var(--hover-bg)]"
-                                >
-                                  {sub.icon && (
-                                    <sub.icon className="h-4 w-4 mr-2 shrink-0 z-50" />
-                                  )}
-                                  {/* Text wrapper (important) */}
-                                  <div className="relative overflow-hidden flex-1">
-                                    <span className={`inline-block whitespace-nowrap ${item.name.length > 23 ? "hover:animate-scroll":""}`}>
-                                      {sub.name}
-                                    </span>
-                                  </div>
-                                </Link>
-
-                                </div>
-                              ))}
-                            </div>
-                          </div>
-                        ))}
+                      {/* Wrapper for scrolling */}
+                      <div className="overflow-hidden max-w-[60px]">
+                        <span
+                          className={`inline-block whitespace-nowrap ${
+                            item.name.length > 7 ? "hover:animate-scroll" : ""
+                          }`}
+                        >
+                          {item.name}
+                        </span>
                       </div>
-                    </motion.div>
-                  )}
-                </AnimatePresence>
+
+                      {/* Dropdown arrow */}
+                      <svg
+                        className={`ml-1 h-5 w-5 transition-transform ${
+                          openDropdown === item.name ? "rotate-180" : ""
+                        }`}
+                        xmlns="http://www.w3.org/2000/svg"
+                        fill="none"
+                        viewBox="0 0 24 24"
+                        stroke="currentColor"
+                      >
+                        <path
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          strokeWidth={2}
+                          d="M19 9l-7 7-7-7"
+                        />
+                      </svg>
+                    </button>
+
+                    {/* Dropdown with Headings + SubItems */}
+                    <AnimatePresence>
+                      {openDropdown === item.name && item.headings && (
+                        <motion.div
+                          initial="hidden"
+                          animate="visible"
+                          exit="exit"
+                          variants={dropdownVariants}
+                          transition={{ duration: 0.2, ease: "easeInOut" }}
+                          className="absolute left-0 mt-2 w-56 rounded-md bg-background z-50"
+                          style={{ boxShadow: "var(--dropdown-shadow)" }}
+                        >
+                          <div className="py-2">
+                            {item.headings.map((heading) => (
+                              <div key={heading.title} className="px-4 py-2">
+                                <p className="flex items-center text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase mb-1 whitespace-break-spaces">
+                                  {heading.icon && (
+                                    <heading.icon className="h-4 w-4 mr-2" />
+                                  )}
+                                  {heading.title}
+                                </p>
+                                <div className="space-y-1">
+                                  {heading.subItems.map((sub) => (
+                                    <Link
+                                      key={sub.path}
+                                      href={sub.path}
+                                      onClick={() => {
+                                        setActive(item.name);
+                                        setOpenDropdown(null);
+                                      }}
+                                      className="flex items-center px-2 py-1 text-sm rounded hover:bg-[var(--hover-bg)]"
+                                    >
+                                      {sub.icon && (
+                                        <sub.icon className="h-4 w-4 mr-2 shrink-0 z-50" />
+                                      )}
+                                      {/* Text wrapper (important) */}
+                                      <div className="relative overflow-hidden flex-1">
+                                        <span
+                                          className={`inline-block whitespace-nowrap ${
+                                            sub.name.length > 23
+                                              ? "hover:animate-scroll"
+                                              : ""
+                                          }`}
+                                        >
+                                          {sub.name}
+                                        </span>
+                                      </div>
+                                    </Link>
+                                  ))}
+                                </div>
+                              </div>
+                            ))}
+                          </div>
+                        </motion.div>
+                      )}
+                    </AnimatePresence>
+                  </>
+                ) : (
+                  // === Module with no dropdown (direct link) ===
+                  <Link
+                    href={item.path}
+                    onClick={() => {
+                      setActive(item.name);
+                      setOpenDropdown(null);
+                    }}
+                    className={`inline-flex items-center px-3 py-2 text-sm font-medium rounded-md max-w-[120px] ${
+                      active === item.name
+                        ? "bg-[var(--hover-bg)]"
+                        : "hover:bg-[var(--hover-bg)]"
+                    }`}
+                  >
+                    <div className="overflow-hidden max-w-[80px]">
+                      <span
+                        className={`inline-block whitespace-nowrap ${
+                          item.name.length > 7 ? "hover:animate-scroll" : ""
+                        }`}
+                      >
+                        {item.name}
+                      </span>
+                    </div>
+                  </Link>
+                )}
               </div>
             ))}
 
+            {/* === More (...) Button === */}
             {/* === More (...) Button === */}
             {visibleCount < navItems.length && (
               <div className="relative">
@@ -584,103 +620,145 @@ const Page = () => {
                   ...
                 </button>
 
-                <AnimatePresence>
-                  {openDropdown === "more" && (
-                    <motion.div
-                      initial="hidden"
-                      animate="visible"
-                      exit="exit"
-                      variants={dropdownVariants}
-                      transition={{ duration: 0.2, ease: "easeInOut" }}
-                      className="absolute -right-2 mt-2 w-56 rounded-md bg-background z-50"
-                      style={{ boxShadow: "var(--dropdown-shadow)" }}
-                    >
-                      <div className="py-2 max-h-[calc(100vh-200px)] overflow-y-auto">
-                        {navItems.slice(visibleCount).map((item) => (
-                          <div key={item.path} className="px-2 py-1">
-                            {/* Module button with arrow */}
-                            <button
-                              onClick={() => toggleMoreDropdown(item.name)}
-                              className="w-full flex items-center justify-between text-sm font-medium hover:bg-[var(--hover-bg)] px-2 py-1 rounded truncate"
-                            >
-                              {/* Wrapper for scrolling */}
-                              <div className="overflow-hidden">
-                                <span className="inline-block whitespace-nowrap hover:animate-scroll">
-                                  {item.name}
-                                </span>
-                              </div>
-                              <svg
-                                className={`ml-1 h-4 w-4 transition-transform ${
-                                  openMoreDropdown === item.name ? "rotate-180" : ""
-                                }`}
-                                xmlns="http://www.w3.org/2000/svg"
-                                fill="none"
-                                viewBox="0 0 24 24"
-                                stroke="currentColor"
-                              >
-                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
-                              </svg>
-                            </button>
-
-                            {/* Expanded dropdown for this module */}
-                            <AnimatePresence>
-                              {openMoreDropdown === item.name && (
-                                <motion.div 
-                                initial={{ height: 0, opacity: 0 }}
-                                animate={{ height: "auto", opacity: 1 }}
-                                exit={{ height: 0, opacity: 0 }}
-                                transition={{ duration: 0.3, ease: "easeInOut" }}
-                                className="mt-2 pl-4 overflow-hidden">
-                                  {item.headings &&
-                                    item.headings.map((heading) => (
-                                      <div key={heading.title} className="mb-2">
-                                        <p className="text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase mb-1 whitespace-break-spaces">
-                                          {heading.title}
-                                        </p>
-                                        <div className="space-y-1">
-                                          {heading.subItems.map((sub) => (
-                                            <Link
-                                              key={sub.path}
-                                              href={sub.path}
-                                              onClick={() => {
-                                                setActive(item.name);
-                                                setOpenDropdown(null);
-                                                setOpenMoreDropdown(null);
-                                              }}
-                                              className="block px-2 py-1 text-sm rounded hover:bg-[var(--hover-bg)] truncate"
-                                            >
-                                              {sub.name}
-                                            </Link>
-                                          ))}
-                                        </div>
-                                      </div>
-                                    ))}
-                                  {item.subItems &&
-                                    item.subItems.map((sub) => (
-                                      <Link
-                                        key={sub.path}
-                                        href={sub.path}
-                                        onClick={() => {
-                                          setActive(item.name);
-                                          setOpenDropdown(null);
-                                          setOpenMoreDropdown(null);
-                                        }}
-                                        className="block px-2 py-1 text-sm rounded hover:bg-[var(--hover-bg)] truncate"
-                                      >
-                                        <span className="inline-block hover:animate-scroll">{sub.name}</span>
-                                      </Link>
-                                    ))}
-                                </motion.div>
-                              )}
-                            </AnimatePresence>
-                          </div>
-                        ))}
+    <AnimatePresence>
+      {openDropdown === "more" && (
+        <motion.div
+          initial="hidden"
+          animate="visible"
+          exit="exit"
+          variants={dropdownVariants}
+          transition={{ duration: 0.2, ease: "easeInOut" }}
+          className="absolute -right-2 mt-2 w-56 rounded-md bg-background z-50"
+          style={{ boxShadow: "var(--dropdown-shadow)" }}
+        >
+          <div className="py-2 max-h-[calc(100vh-200px)] overflow-y-auto">
+            {navItems.slice(visibleCount).map((item) => (
+              <div
+                key={item.path}
+                className="relative group"
+              >
+                {item.headings || item.subItems ? (
+                  // === Parent with submodules → nested dropdown ===
+                  <>
+                    <div className="flex items-center justify-between px-2 py-1 text-sm font-medium rounded hover:bg-[var(--hover-bg)] cursor-pointer">
+                      {/* Module name */}
+                      <div className="overflow-hidden max-w-[120px]">
+                        <span
+                          className={`inline-block whitespace-nowrap ${
+                            item.name.length > 7 ? "hover:animate-scroll" : ""
+                          }`}
+                        >
+                          {item.name}
+                        </span>
                       </div>
-                    </motion.div>
+
+                      {/* Right arrow */}
+                      <svg
+                        className="ml-1 h-4 w-4 text-gray-500 group-hover:text-gray-700"
+                        xmlns="http://www.w3.org/2000/svg"
+                        fill="none"
+                        viewBox="0 0 24 24"
+                        stroke="currentColor"
+                      >
+                        <path
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          strokeWidth={2}
+                          d="M9 5l7 7-7 7"
+                        />
+                      </svg>
+                    </div>
+
+                    {/* Flyout submenu (appears on hover) */}
+                    <div className="absolute top-0 left-full ml-1 hidden group-hover:block bg-background w-56 rounded-md shadow-lg z-50">
+                      <div className="py-2">
+                        {item.headings &&
+                          item.headings.map((heading) => (
+                            <div key={heading.title} className="px-4 py-2">
+                              <p className="flex items-center text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase mb-1">
+                                {heading.icon && (
+                                  <heading.icon className="h-4 w-4 mr-2" />
+                                )}
+                                {heading.title}
+                              </p>
+                              <div className="space-y-1">
+                                {heading.subItems.map((sub) => (
+                                  <Link
+                                    key={sub.path}
+                                    href={sub.path}
+                                    onClick={() => {
+                                      setActive(item.name);
+                                      setOpenDropdown(null);
+                                    }}
+                                    className="flex items-center px-2 py-1 text-sm rounded hover:bg-[var(--hover-bg)]"
+                                  >
+                                    {sub.icon && (
+                                      <sub.icon className="h-4 w-4 mr-2 shrink-0" />
+                                    )}
+                                    <div className="relative overflow-hidden flex-1">
+                                      <span
+                                        className={`inline-block whitespace-nowrap ${
+                                          sub.name.length > 23
+                                            ? "hover:animate-scroll"
+                                            : ""
+                                        }`}
+                                      >
+                                        {sub.name}
+                                      </span>
+                                    </div>
+                                  </Link>
+                                ))}
+                              </div>
+                            </div>
+                          ))}
+
+                        {item.subItems &&
+                          item.subItems.map((sub) => (
+                            <Link
+                              key={sub.path}
+                              href={sub.path}
+                              onClick={() => {
+                                setActive(item.name);
+                                setOpenDropdown(null);
+                              }}
+                              className="block px-4 py-2 text-sm rounded hover:bg-[var(--hover-bg)] truncate"
+                            >
+                              <span className="inline-block hover:animate-scroll">
+                                {sub.name}
+                              </span>
+                            </Link>
+                          ))}
+                      </div>
+                    </div>
+                  </>
+                ) : (
+                  // === Direct link if no children ===
+                  <Link
+                    href={item.path}
+                    onClick={() => {
+                      setActive(item.name);
+                      setOpenDropdown(null);
+                    }}
+                    className="block px-2 py-1 text-sm rounded hover:bg-[var(--hover-bg)]"
+                  >
+                    <span
+                      className={`inline-block whitespace-nowrap ${
+                        item.name.length > 7 ? "hover:animate-scroll" : ""
+                      }`}
+                    >
+                      {item.name}
+                    </span>
+                  </Link>
                 )}
-                </AnimatePresence>
               </div>
-            )}
+            ))}
+          </div>
+        </motion.div>
+      )}
+    </AnimatePresence>
+  </div>
+)}
+
           </div>
 
           {/* Settings */}
@@ -735,11 +813,55 @@ const Page = () => {
         {/* === Mobile Menu === */}
         {isMobileMenuOpen && (
           <div
-            className="md:hidden bg-background px-6 py-4 space-y-4 text-sm font-medium max-h-[calc(100vh-200px)] overflow-y-auto"
+            className="md:hidden bg-background px-4 py-4 space-y-4 text-sm font-medium max-h-[calc(100vh-200px)] overflow-y-auto"
             style={{ borderTopColor: "var(--border-top)" }}
           >
-            {/* Search */}
-            <SearchBar />
+            {/* Top Row: Search + Settings */}
+            <div className="flex items-center gap-3">
+              {/* Search should take most space */}
+              <div className="flex-1 min-w-0">
+                <SearchBar />
+              </div>
+
+              {/* Settings button */}
+              <div className="relative shrink-0" ref={settingsRef}>
+                <button
+                  onClick={() => setIsSettingsOpen(!isSettingsOpen)}
+                  className="p-2 rounded-full hover:bg-[var(--hover-bg)] transition"
+                >
+                  <Settings className="h-5 w-5" />
+                </button>
+
+                {isSettingsOpen && (
+                  <div
+                    className="absolute right-0 mt-2 w-48 bg-background rounded-xl py-2 z-50"
+                    style={{ boxShadow: "var(--dropdown-shadow)" }}
+                  >
+                    <Link
+                      href="#"
+                      className="flex items-center gap-2 px-4 py-2 hover:bg-[var(--hover-bg)]"
+                    >
+                      <Cable className="h-4 w-4 shrink-0" />
+                      <span>Support</span>
+                    </Link>
+                    <Link
+                      href="#"
+                      className="flex items-center gap-2 px-4 py-2 hover:bg-[var(--hover-bg)]"
+                    >
+                      <ShieldUser className="h-4 w-4 shrink-0" />
+                      <span>Account Settings</span>
+                    </Link>
+                    <Link
+                      href="#"
+                      className="flex items-center gap-2 px-4 py-2 hover:bg-[var(--hover-bg)]"
+                    >
+                      <BadgeAlert className="h-4 w-4 shrink-0" />
+                      <span>App Settings</span>
+                    </Link>
+                  </div>
+                )}
+              </div>
+            </div>
 
             {/* Mobile Modules */}
             {navItems.map((item) => (
@@ -751,7 +873,7 @@ const Page = () => {
                       openMobileDropdown === item.name ? null : item.name
                     )
                   }
-                  className="flex justify-between w-full text-left px-3 py-2 rounded-md hover:bg-[var(--hover-bg)] items-center max-w-[300px]"
+                  className="flex justify-between w-full text-left px-3 py-2 rounded-md hover:bg-[var(--hover-bg)] items-center max-w-full"
                 >
                   <div className="overflow-hidden max-w-[230px]">
                     <span
@@ -789,11 +911,11 @@ const Page = () => {
                     {item.headings &&
                       item.headings.map((heading) => (
                         <div key={heading.title} className="space-y-1">
-                          <p className="flex items-center text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase mb-1 whitespace-break-spaces max-w-[300px]">
-                              <span>{heading.icon && <heading.icon className="h-4 w-4 mr-2" />}</span>
-                              {heading.title}
-                            </p>
-                          <div className="space-y-1 max-w-[300px]">
+                          <p className="flex items-center text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase mb-1 whitespace-break-spaces max-w-full">
+                            {heading.icon && <heading.icon className="h-4 w-4 mr-2" />}
+                            {heading.title}
+                          </p>
+                          <div className="space-y-1 max-w-full">
                             {heading.subItems.map((sub) => (
                               <Link
                                 key={sub.path}
@@ -805,12 +927,13 @@ const Page = () => {
                                 className="flex items-center px-2 py-1 rounded hover:bg-[var(--hover-bg)] overflow-hidden"
                               >
                                 {sub.icon && (
-                                    <sub.icon className="h-4 w-4 mr-2 shrink-0 z-50" />
-                                  )}
+                                  <sub.icon className="h-4 w-4 mr-2 shrink-0 z-50" />
+                                )}
                                 <div className="relative overflow-hidden flex-1">
-                                  <span className={`inline-block max-w-full whitespace-nowrap ${
-                                    sub.name.length > 35 ? "auto-scroll" : ""
-                                  }`}
+                                  <span
+                                    className={`inline-block whitespace-nowrap ${
+                                      sub.name.length > 35 ? "auto-scroll" : ""
+                                    }`}
                                   >
                                     {sub.name}
                                   </span>
@@ -831,61 +954,29 @@ const Page = () => {
                             setActive(item.name);
                             setIsMobileMenuOpen(false);
                           }}
-                          className="block px-2 py-1 text-sm rounded hover:bg-[var(--hover-bg)] overflow-hidden"
+                          className="flex items-center px-2 py-1 text-sm rounded hover:bg-[var(--hover-bg)] overflow-hidden"
                         >
-                          <span
-                            className={`inline-block max-w-[160px] whitespace-nowrap overflow-hidden ${
-                              sub.name.length > 12 ? "auto-scroll" : ""
-                            }`}
-                          >
-                            {sub.name}
-                          </span>
+                          {sub.icon && (
+                            <sub.icon className="h-4 w-4 mr-2 shrink-0 z-50" />
+                          )}
+                          <div className="relative overflow-hidden flex-1">
+                            <span
+                              className={`inline-block whitespace-nowrap ${
+                                sub.name.length > 12 ? "auto-scroll" : ""
+                              }`}
+                            >
+                              {sub.name}
+                            </span>
+                          </div>
                         </Link>
                       ))}
                   </div>
                 )}
               </div>
             ))}
-
-
-            {/* Mobile Settings */}
-            <div className="relative" ref={settingsRef}>
-              <button
-                onClick={() => setIsSettingsOpen(!isSettingsOpen)}
-                className="p-2 rounded-full hover:bg-[var(--hover-bg)] transition"
-              >
-                <Settings className="h-5 w-5" />
-              </button>
-
-              {isSettingsOpen && (
-                <div
-                  className="absolute right-0 mt-2 w-48 bg-background rounded-xl py-2 z-50"
-                  style={{ boxShadow: "var(--dropdown-shadow)" }}
-                >
-                  <Link
-                    href="#"
-                    className="block px-4 py-2 hover:bg-[var(--hover-bg)]"
-                  >
-                    Profile
-                  </Link>
-                  <Link
-                    href="#"
-                    className="block px-4 py-2 hover:bg-[var(--hover-bg)]"
-                  >
-                    Settings
-                  </Link>
-                  <Link
-                    href="#"
-                    className="block px-4 py-2 hover:bg-[var(--hover-bg)]"
-                  >
-                    Logout
-                  </Link>
-                </div>
-              )}
-            </div>
           </div>
         )}
-
+        
       </nav>
     </div>
   );

@@ -82,7 +82,7 @@ const SearchBar = () => {
     .slice(0, 5);
 
   return (
-    <div className="relative w-80">
+    <div className="relative w-full">
       {/* Input */}
       <Search className="absolute left-3 top-2.5 h-4 w-4 text-[var(--muted-foreground)]" />
       <input
