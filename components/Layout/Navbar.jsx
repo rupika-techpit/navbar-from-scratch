@@ -24,6 +24,8 @@ import Notifications from "../Header/Notification";
 import SearchBar from "../Header/searchbar";
 import { motion, AnimatePresence } from "framer-motion";
 import SubmenuPortal from "../Menu/Submenu";
+import { usePathname } from "next/navigation";
+
 
 
 const Page = () => {
@@ -47,6 +49,10 @@ const Page = () => {
   const [submenuPosition, setSubmenuPosition] = useState("right");
   const [parentRect, setParentRect] = useState(null);
   const closeTimeoutRef = useRef(null);
+
+  const pathname = usePathname();
+  console.log(pathname);
+  const isAdmin = pathname.startsWith("/admin");
 
   useEffect(() => {
     if (isMobileMenuOpen) {
@@ -210,7 +216,7 @@ const Page = () => {
       path: "/forms",
     },
     {
-      name: "AnalyticAn",
+      name: "AnalyticAn-AnalyticAn-AnalyticAn",
       path: "/analytic",
       headings: [
         {
@@ -674,10 +680,10 @@ const Page = () => {
                         >
                           {/* Row */}
                           <div className="px-2 py-1 flex justify-between items-center hover:bg-[var(--hover-bg)] cursor-pointer">
-                            <div className="overflow-hidden max-w-[60px]">
+                            <div className="overflow-hidden max-w-[120px]">
                               <span
                                 className={`inline-block whitespace-nowrap ${
-                                  item.name.length > 7 ? "hover:animate-scroll" : ""
+                                  item.name.length > 15 ? "hover:animate-scroll" : ""
                                 }`}
                               >
                                 {item.name}
@@ -736,10 +742,9 @@ const Page = () => {
             <AnimatePresence>
               {isSettingsOpen && (
                 <motion.div
-                  initial="hidden"
-                  animate="visible"
-                  exit="exit"
-                  variants={dropdownVariants}
+                  initial={{ opacity: 0, y: -5 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, y: -5 }}  // 👈 this is the key
                   transition={{ duration: 0.2, ease: "easeInOut" }}
                   className="absolute right-0 mt-2 w-48 bg-background rounded-xl py-2 z-50"
                   style={{ boxShadow: "var(--dropdown-shadow)" }}
@@ -748,7 +753,6 @@ const Page = () => {
                     href="#"
                     className="flex items-center gap-2 px-4 py-2 hover:bg-[var(--hover-bg)]"
                   >
-                    
                     <Cable className="h-4 w-4 shrink-0" />
                     <span>Support</span>
                   </Link>
@@ -759,17 +763,19 @@ const Page = () => {
                     <ShieldUser className="h-4 w-4 shrink-0" />
                     <span>Account Settings</span>
                   </Link>
-                  <Link
-                    href="#"
-                    className="flex items-center gap-2 px-4 py-2 hover:bg-[var(--hover-bg)]"
-                  >
-                    
-                    <BadgeAlert className="h-4 w-4 shrink-0" />
-                    <span>App Settings</span>
-                  </Link>
+                  {isAdmin && (
+                    <Link
+                      href="#"
+                      className="flex items-center gap-2 px-4 py-2 hover:bg-[var(--hover-bg)]"
+                    >
+                      <BadgeAlert className="h-4 w-4 shrink-0" />
+                      <span>App Settings</span>
+                    </Link>
+                  )}
                 </motion.div>
               )}
             </AnimatePresence>
+
           </div>
         </div>
         
@@ -814,13 +820,16 @@ const Page = () => {
                       <ShieldUser className="h-4 w-4 shrink-0" />
                       <span>Account Settings</span>
                     </Link>
-                    <Link
-                      href="#"
-                      className="flex items-center gap-2 px-4 py-2 hover:bg-[var(--hover-bg)]"
-                    >
-                      <BadgeAlert className="h-4 w-4 shrink-0" />
-                      <span>App Settings</span>
-                    </Link>
+                    {/* Only for admin */}
+                    {isAdmin && (
+                      <Link
+                        href="#"
+                        className="flex items-center gap-2 px-4 py-2 hover:bg-[var(--hover-bg)]"
+                      >
+                        <BadgeAlert className="h-4 w-4 shrink-0" />
+                        <span>App Settings</span>
+                      </Link>
+                    )}
                   </div>
                 )}
               </div>
