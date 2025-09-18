@@ -23,7 +23,7 @@ import { useTheme } from "next-themes";
 import Notifications from "../Header/Notification";
 import SearchBar from "../Header/searchbar";
 import { motion, AnimatePresence } from "framer-motion";
-import SubmenuPortal from "../menu/submenu";
+import SubmenuPortal from "../Menu/Submenu";
 
 
 const Page = () => {
