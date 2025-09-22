@@ -25,8 +25,10 @@ export default function SubmenuPortal({
   const submenuHeight = 240;
   const viewportHeight = window.innerHeight;
   let top = parentRect.bottom;
+  // If submenu overflows bottom, move it up just enough
   if (top + submenuHeight > viewportHeight) {
-    top = Math.max(0, parentRect.top - submenuHeight); // push above
+    const overflow = top + submenuHeight - viewportHeight;
+    top = Math.max(parentRect.top - overflow, 0); // move up by the overflow amount
   }
 
   return createPortal(

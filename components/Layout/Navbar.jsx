@@ -51,11 +51,23 @@ const Page = () => {
   const [parentRect, setParentRect] = useState(null);
   const closeTimeoutRef = useRef(null);
 
-  const pathname = usePathname();
-  console.log(pathname);
-  const isAdmin = pathname.startsWith("/admin");
-  const roles = pathname.split("/")[1];
-  console.log(roles);
+  const users = [
+    { id: "123", role: "admin" },
+    { id: "456", role: "donor" },
+    { id: "789", role: "user" },
+  ];
+
+  const pathname = usePathname(); 
+  // e.g. "/123/accountSettings"
+
+  // Extract the first part (id)
+  const userId = pathname.split("/")[1];
+
+  // Find the user in your array
+  const currentUser = users.find((u) => u.id === userId);
+
+  // Check if admin
+  const isAdmin = currentUser?.role === "admin";
 
   useEffect(() => {
     if (isMobileMenuOpen) {
@@ -655,7 +667,7 @@ const Page = () => {
               >
                 <button
                   onClick={() => toggleDropdown("more")}
-                  className="inline-flex items-center px-3 py-2 text-sm font-medium rounded-md hover:bg-[var(--hover-bg)]"
+                  className="inline-flex items-center px-3 py-2 text-sm font-medium rounded-full hover:bg-[var(--hover-bg)]"
                 >
                   ...
                 </button>
@@ -787,7 +799,7 @@ const Page = () => {
                     <span>Support</span>
                   </Link>
                   <Link
-                    href={`/${roles}/accountSettings`}
+                    href="accountSettings"
                     className="flex items-center gap-2 px-4 py-2 hover:bg-[var(--hover-bg)]"
                   >
                     <ShieldUser className="h-4 w-4 shrink-0" />
@@ -795,7 +807,7 @@ const Page = () => {
                   </Link>
                   {isAdmin && (
                     <Link
-                      href="#"
+                      href="appSettings"
                       className="flex items-center gap-2 px-4 py-2 hover:bg-[var(--hover-bg)]"
                     >
                       <BadgeAlert className="h-4 w-4 shrink-0" />
