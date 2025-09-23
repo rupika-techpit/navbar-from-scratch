@@ -70,6 +70,11 @@ const Page = () => {
   const isAdmin = currentUser?.role === "admin";
 
   useEffect(() => {
+    setIsSettingsOpen(false); // close whenever route changes
+    setIsMobileMenuOpen(false);
+  }, [pathname]);
+
+  useEffect(() => {
     if (isMobileMenuOpen) {
       document.body.style.overflow = "hidden";
     } else {
@@ -91,7 +96,7 @@ const Page = () => {
       }
     }
 
-    document.addEventListener("mousedown", handleClickOutside);
+     document.addEventListener("mousedown", handleClickOutside);
     return () => document.removeEventListener("mousedown", handleClickOutside);
   }, []);
 
@@ -390,7 +395,7 @@ const Page = () => {
   return (
     <div className="bg-background text-foreground">
       <nav
-        className="w-full bg-background border rounded-xl shadow-sm"
+        className="w-full fixed top-0 left-0 z-50 bg-background border rounded-xl shadow-sm"
         style={{
           borderColor: "var(--border-color)",
           boxShadow: "0 1px 2px var(--shadow-color)",
@@ -792,7 +797,7 @@ const Page = () => {
                   style={{ boxShadow: "var(--dropdown-shadow)" }}
                 >
                   <Link
-                    href="#"
+                    href="/support"
                     className="flex items-center gap-2 px-4 py-2 hover:bg-[var(--hover-bg)]"
                   >
                     <Cable className="h-4 w-4 shrink-0" />
@@ -851,14 +856,14 @@ const Page = () => {
                     style={{ boxShadow: "var(--dropdown-shadow)" }}
                   >
                     <Link
-                      href="#"
+                      href="/support"
                       className="flex items-center gap-2 px-4 py-2 hover:bg-[var(--hover-bg)]"
                     >
                       <Cable className="h-4 w-4 shrink-0" />
                       <span>Support</span>
                     </Link>
                     <Link
-                      href={`/${roles}/accountSettings`}
+                      href="/accountSettings"
                       className="flex items-center gap-2 px-4 py-2 hover:bg-[var(--hover-bg)]"
                     >
                       <ShieldUser className="h-4 w-4 shrink-0" />

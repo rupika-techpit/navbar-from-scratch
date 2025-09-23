@@ -40,7 +40,7 @@ export default function RootLayout({ children }) {
           <Navbar />
 
           {/* Scrollable content */}
-          <main className="flex-grow w-full pb-16"> 
+          <main className="flex-grow w-full pb-16 pt-[150px] md:pt-[120px] sm:pt-[80px]"> 
             {/* add padding-bottom so content doesn't overlap footer */}
             {children}
           </main>
