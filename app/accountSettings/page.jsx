@@ -138,7 +138,7 @@ export default function ProfileSettingsPage() {
             <p className="text-sm text-[var(--muted-foreground)] mb-4">sophia.patel@email.com</p>
 
             {/* Actions */}
-            <div className="flex flex-col gap-3 w-1/2">
+            <div className="flex flex-col gap-3 w-full md:w-1/2">
               <button
                 onClick={() => setShowUpdatePhotoModal(true)}
                 className="px-4 py-2 rounded-lg text-white bg-blue-600 hover:bg-blue-700 transition font-medium"
